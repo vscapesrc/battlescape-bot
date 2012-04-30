@@ -6,10 +6,10 @@ package com.bsbot.launcher;
 
 import java.util.Hashtable;
 
-public class b extends ClassLoader
+public class ClassThing extends ClassLoader
 {
 
-    public b()
+    public ClassThing()
     {
         _fldif = new Hashtable();
     }
@@ -36,5 +36,5 @@ public class b extends ClassLoader
     }
 
     public Hashtable _fldif;
-    public a a;
+    public ClientClassLoader a;
 }

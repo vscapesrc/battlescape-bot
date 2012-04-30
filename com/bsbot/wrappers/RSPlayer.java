@@ -61,11 +61,7 @@ public class RSPlayer extends RSEntity {
 		if (c == null) {
 			return new RSTile(-1, -1);
 		}
-/*	int x = NRLoader.getClient().getBaseX() + (c.getX() >> 7);
-		int y = NRLoader.getClient().getBaseY() + (c.getY() >> 7);*/
 		Client cl = BSLoader.getClient();
-	/*	System.out.println("baseX:" +cl.getBaseX() + " basey:" + cl.getBaseY());
-        return new RSTile(getAccessor().getSmallX()[0] + NRLoader.getClient().getBaseX(), getAccessor().getSmallY()[0] + NRLoader.getClient().getBaseY());*/
 		int x = cl.getBaseX() + (c.getX() >> 7);
 		int y = cl.getBaseY() + (c.getY() >> 7);
 		return new RSTile(x, y);

@@ -105,12 +105,11 @@ public class Loader extends Applet
     {
         try
         {
-            b b1 = new b();
-            byte abyte0[] = a("https://dl.dropbox.com/s/x51jtwfdqbglu5k/client.jar?dl=1", "Starting up BSBot");
-           //// byte abyte0[] = a("http://localhost/client.jar", "Loading game code");
+            ClassThing b1 = new ClassThing();
+            byte abyte0[] = a("https://dl.dropbox.com/s/sbvo1ozdxw66wbd/client_V1.1.jar?dl=1", "Starting up BSBot"); // now with grounditems!
             if(abyte0 == null)
                 throw new Exception("Client download failed");
-            b1.a = new a(abyte0);
+            b1.a = new ClientClassLoader(abyte0);
             Class class1 = b1.loadClass("sign.signlink");
             class1.getField("mainapp").set(null, this);
             Class class2 = b1.loadClass("client");
@@ -118,7 +117,6 @@ public class Loader extends Applet
             _fldfor.init();
             _fldfor.start();
             BSLoader.setClient((Client)_fldfor);
-           //// Applet a = (Applet) class1.getField("mainapp").g;
         }
         catch(Exception exception)
         {
