@@ -9,10 +9,10 @@ import java.util.Hashtable;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class a
+public class ClientClassLoader
 {
 
-    public a(byte abyte0[])
+    public ClientClassLoader(byte abyte0[])
         throws IOException
     {
         a = new Hashtable();

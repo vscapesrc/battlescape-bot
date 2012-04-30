@@ -1,13 +1,8 @@
 package com.bsbot.wrappers;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 
-import com.bsbot.hooks.Client;
 import com.bsbot.hooks.GameInterface;
-import com.bsbot.hooks.GameObject;
 import com.bsbot.launcher.BSLoader;
 
 /**
@@ -21,7 +16,6 @@ public class RSInterface {
 	 * Cache of this interface's children.
 	 */
 
-	private final Object childLock = new Object();
 
 	/**
 	 * The index of this interface.

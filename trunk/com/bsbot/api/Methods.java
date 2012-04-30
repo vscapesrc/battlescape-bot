@@ -28,6 +28,7 @@ public class Methods {
 	public Camera camera = new Camera(this);
 	private RSInterface[] mainCache = new RSInterface[0];
 	public Skills skills = new Skills();
+	public GroundItems grounditems = new GroundItems();
 	// If it doesn't fit in the above cache.
 	private Map<Integer, RSInterface> sparseMap = new HashMap<Integer, RSInterface>();
 
