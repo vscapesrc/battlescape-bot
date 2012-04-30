@@ -42,6 +42,7 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 	/**
 	 * 
 	 */
+	KeyListener k = new Keys();
 	private static final long serialVersionUID = 1L;
 	static Loader loader;
 	static Client c = null;
@@ -53,9 +54,10 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 	static JMenu menu = new JMenu("File");
 	static JMenuItem start = new JMenuItem("Start script");
 	static JMenuItem stop = new JMenuItem("Stop script");
+	static JMenuItem debugItem = new JMenuItem("Debug");
 	static JMenuItem quit = new JMenuItem("Quit");
 
-	boolean debug = true; /// set to true if you want to see stuff like players, npcs, interfaces etc with number keys
+	boolean debug = false; /// set to true if you want to see stuff like players, npcs, interfaces etc with number keys
 
 	private static String[] titles = new String[] {
 			"BattleScape bot - botting for wild pkers",
@@ -91,22 +93,25 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 		menu.addActionListener(this);
 		start.addActionListener(this);
 		stop.addActionListener(this);
+		debugItem.addActionListener(this);
 	}
 
 	public static void main(String args[]) {
 
-		loader = new Loader();
-		loader.setStub(new BSLoader());
-		loader.setSize(765 + 23, 503);
+
 		java.util.Random r = new java.util.Random();
 		int random = r.nextInt(titles.length);
 		JFrame jframe = new JFrame(titles[random]);
 		menuBar.add(menu);
 		menu.add(start);
 		menu.add(stop);
+		menu.add(debugItem);
 		menu.add(quit);
 		menuBar.add(input);
 		input.setEnabled(false);
+		loader = new Loader();
+		loader.setStub(new BSLoader());
+		loader.setSize(765 + 23, 503);
 		jframe.setJMenuBar(menuBar);
 		jframe.setBounds(40, 40, 773, 531 + 25 + 45);
 		JTabbedPane panel = new JTabbedPane();
@@ -163,6 +168,17 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		System.out.println(e.getActionCommand());
+		if(e.getActionCommand().equals("Debug")){
+			System.out.println("debug is here");
+			if(!debug){
+				debug = true;
+				loader.addKeyListener(k);
+			}else{
+				System.out.println(debug);
+				loader.removeKeyListener(k);
+			}
+		}
 		if (e.getActionCommand().equals("Start script")) {
 			Thread s = null;
 			if (runningScript != null) {
