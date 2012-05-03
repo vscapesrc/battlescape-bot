@@ -16,14 +16,7 @@ public abstract class RSEntity {
 
 	protected abstract com.bsbot.hooks.Entity getAccessor();
 
-	/*public RSEntity getInteracting() {
-		final int interact = getAccessor().getInteracting();
-		if (interact == -1 || interact == 0) {
-			return null;
-		} else {
-			return new RSNPC(NRLoader.getClient().getNpcs()[interact]);
-		}
-	}*/
+
 	
 	public RSEntity getInteracting(){
 		int interact = getAccessor().getInteracting();
@@ -61,10 +54,10 @@ public abstract class RSEntity {
             if(Menu.isOpen()){
             	m.moveMouse(1, 1);
             }
-               /// Mouse.moveMouseRandomly(450);
+
             m.moveMouse(p);
             String actions[] = Menu.getValidMenuActions();
-        ///////	System.out.println(actions[0]);
+
         	for(int i = 0; i < actions.length; i++){
         		actions[i] = actions[i].toLowerCase();
         	}
@@ -109,6 +102,7 @@ public abstract class RSEntity {
 		int y = BSLoader.getClient().getBaseY() + (c.getY() >> 7);
 		Client cl = BSLoader.getClient();
 		return new RSTile(x, y);
+		//alternative:
        // return new RSTile(getAccessor().getSmallX()[0] + BSLoader.getClient().getBaseX(), getAccessor().getSmallY()[0] + BSLoader.getClient().getBaseY());
 	}
 
@@ -124,8 +118,5 @@ public abstract class RSEntity {
 		return getAccessor().getY();
 	}
 
-	/*
-	 * if (interact < 32768) { return new RSNPC(methods, ((RSNPCNode)
-	 * node).getRSNPC()); } return null;
-	 */
+
 }

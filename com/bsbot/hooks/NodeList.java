@@ -2,9 +2,10 @@ package com.bsbot.hooks;
 
 
 public interface NodeList {
+	public Node getNode();
 	
-    public Node getNextHook();
+    public Node getNextHook(int i);
     
-    public Node getFirstHook();
+    public Node getFirstHook(boolean i);
 
 }

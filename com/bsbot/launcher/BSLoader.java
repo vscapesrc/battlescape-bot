@@ -1,6 +1,5 @@
 package com.bsbot.launcher;
 
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) 
 
@@ -21,6 +20,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
+import scripts.AIOFighter;
 import scripts.AIOFisher;
 import scripts.BankTest;
 import scripts.BarbarianAgility;
@@ -197,10 +197,10 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 						runningScript = new BarbarianAgility();
 						s = new Thread(runningScript, "Script");
 						s.start();
-					/*}else if(a.equalsIgnoreCase("fighter")){ private script, make your own if you want 
+					}else if(a.equalsIgnoreCase("fighter")){ 
 						runningScript = new AIOFighter();
 						s = new Thread(runningScript, "Script");
-						s.start();*/
+						s.start();
 					} else if (a.equals("thief")) {
 						runningScript = new Thief();
 						s = new Thread(runningScript, "Script");

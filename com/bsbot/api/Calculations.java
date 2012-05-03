@@ -29,14 +29,10 @@ public class Calculations {
 	}
 
 	public static boolean tileOnMap(RSTile t) {
-		// Point p = tileToMinimap(t);
-		// return p != null && p.x != -1 && p.y != -1;
 		return distanceTo(t) < 15;
 	}
 
 	public static int distanceTo(RSTile t) {
-		/*return t == null ? -1 : (int) distanceBetween(BSLoader.getMethods()
-				.getMyPlayer().getLocation(), t);*/
 		return (int) distanceBetween(Methods.getMyPlayer().getLocation(), t);
 	}
 
@@ -72,14 +68,6 @@ public class Calculations {
 		return angle >= 0 ? angle : 360 + angle;
 	}
 
-/*	public static Point tileToMinimap(RSTile destination) {
-		Point p =  worldToMinimap(
-				((destination.getX() - BSLoader.getClient().getBaseX()) * 4 + 2)
-				- BSLoader.getMethods().getMyPlayer().getX() / 32,
-		((destination.getY() - BSLoader.getClient().getBaseY()) * 4 + 2)
-				- BSLoader.getMethods().getMyPlayer().getY() / 32);
-		return p;
-	}*/
 	
 	public static Point tileToMinimap(RSTile t) {
 		return worldToMinimap(t.getX(), t.getY());
@@ -131,17 +119,7 @@ public class Calculations {
 		return GAME_SCREEN.contains(p);
 	}
 
-	/*
-	 * public static Point worldToMinimap(int x, int y) { int angle =
-	 * getMinimapInt1() + getMinimapInt2() & 0x7ff; int m = x * x + y * y; if (m
-	 * > 6400) { return new Point(-1, -1); } else { int n = (SIN_TABLE[angle] *
-	 * 256) / (BSLoader.getClient().getMinimapInt3() + 256);
-	 * 
-	 * int i1 = (COS_TABLE[angle] * 256) /
-	 * (BSLoader.getClient().getMinimapInt3() + 256); int i2 = y * n + x * i1 >>
-	 * 16; int i3 = y * i1 - x * n >> 16; int i4 = 107 + i2 + 3; int i5 = 88 -
-	 * i3 - 5; return new Point(i4 + 516, i5); } }
-	 */
+
 
     public static Point worldToMinimap(int x, int y)
     {
@@ -221,10 +199,6 @@ public class Calculations {
 		return new Point(ScreenX, ScreenY);
 	}
 
-	/*
-	 * public static int tileHeight(RSTile t) { return tileHeight(t.getX(),
-	 * t.getY()); }
-	 */
 
 	public static int tileHeight(int x, int y) {
 		int[][][] ground = BSLoader.getClient().getGroundIntArray();

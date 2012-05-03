@@ -28,42 +28,6 @@ public class Bank {
 		}
 	}
 
-	/*
-	 * public void depositAllExcept(int... ids) { int len = ids.length; int[]
-	 * cache = new int[len]; for (int i = 0; i < len; i++) { cache[i] = ids[i];
-	 * } if (isOpen()) { for (RSItem i : Inventory.getItems()) { if (i != null)
-	 * { for (int a : cache) { if (i.getId() != a) { i.interact("Store All");
-	 * methods.sleep(300); } } } } } }
-	 */
-
-	/*
-	 * public boolean withdraw(final int itemID, final int count) { if
-	 * (isOpen()) { if (count < 0) { throw new
-	 * IllegalArgumentException("count (" + count + ") < 0"); } RSItem rsi =
-	 * methods.inventory.getItem(itemID); if (rsi == null) { return false; }
-	 * 
-	 * // Check tab /*while (item.getRelativeX() == 0 && getCurrentTab() != 0) {
-	 * methods.interfaces.getComponent(INTERFACE_BANK,
-	 * INTERFACE_BANK_TAB[0]).doClick(); sleep(random(800, 1300)); }
-	 * 
-	 * // Scroll to the item if (!methods.interfaces.scrollTo(item,
-	 * (INTERFACE_BANK << 16) + INTERFACE_BANK_SCROLLBAR)) { return false; }
-	 */
-
-	// /// int invCount = methods.inventory.getCount(true);
-	/*
-	 * switch (count) { case 0: item.doAction("Withdraw-All"); break; case 1:
-	 * item.doClick(true); break; case 5: case 10: item.doAction("Withdraw-" +
-	 * count); break; /* default: if (!item.doAction("Withdraw-" + count)) { if
-	 * (item.doAction("Withdraw-X")) { sleep(random(1000, 1300));
-	 * methods.keyboard.sendText(String.valueOf(count), true); } } }
-	 */
-	// / sleep(random(1000, 1300));
-	// / int newInvCount = methods.inventory.getCount(true);
-	// / return newInvCount > invCount || newInvCount == 28;
-	// }
-	// ///// return false;
-	// / }
 
 	public int[] getBankCache() {
 		ArrayList<Integer> list = new ArrayList<Integer>();
@@ -87,12 +51,6 @@ public class Bank {
 		return convertIntegers(list);
 	}
 
-	/*
-	 * public RSBankItem[] getBankItems(){ int[] cache = getBankCache(); int len
-	 * = cache.length; RSBankItem[] returnItem = new RSBankItem[len]; for(int
-	 * i=0; i<len; i++){ returnItem[i] = new RSBankItem(cache[i], i); } return
-	 * returnItem; }
-	 */
 
 	public int getBankCount() {
 		return getBankItems().length;
@@ -153,20 +111,7 @@ public class Bank {
 		}
 	}
 
-	/*
-	 * public boolean depositAllExcept(int... items) { if (isOpen()) { boolean
-	 * deposit = true; int invCount = isOpen() ? methods.inventory.getCount() :
-	 * 0; outer: for (int i = 0; i < 28; i++) { RSComponent item = isOpen() ?
-	 * methods.inventory.getItemAt(i) .getComponent() :
-	 * methods.interfaces.get(11) .getComponent( 17).getComponent( i); if (item
-	 * != null && item.getComponentID() != -1) { for (int id : items) { if
-	 * (item.getComponentID() == id) { continue outer; } } for (int tries = 0;
-	 * tries < 5; tries++) { deposit(item.getComponentID(), 0);
-	 * sleep(random(600, 900)); int cInvCount = isOpen() ? methods.inventory
-	 * .getCount(true) : getBoxCount(); if (cInvCount < invCount) { invCount =
-	 * cInvCount; continue outer; } } deposit = false; } } return deposit; }
-	 * return false; }
-	 */
+
 	public boolean isOpen() {
 		return methods.interfaces.isInterfaceOpen(114);
 	}

@@ -32,21 +32,7 @@ public class TilePath {
 			n.clickMouse(p, true);
 	}
 
-/*	public TilePath reverse() {
-		/////System.out.println("reverse");
-		RSTile[] reversed = new RSTile[tiles.length];
 
-		for (int i = tiles.length - 1; i >= 0; i--) {
-			reversed[i] = tiles[i];
-			//////System.out.println(reversed[i].toString() + " " + i);
-		}
-		TilePath tilepath = new TilePath(reversed);
-		for(int i=0; i < reversed.length; i++){
-			/////System.out.println(tilepath.tiles[i] + " " + i);
-		}
-		return tilepath;
-	}*/
-	
 	public TilePath reverse(){
         List < RSTile > list = new ArrayList<RSTile>();
         for(RSTile a : tiles){
@@ -59,8 +45,7 @@ public class TilePath {
 
 	public RSTile getNext() {
 		for (int i = tiles.length - 1; i > -1; i--) {
-		/////	System.out.println(i);
-		////	System.out.println(tiles[i]);
+
 			if (tiles[i] != null) {
 				if (Calculations.tileOnMap(tiles[i])) {
 						return tiles[i];
