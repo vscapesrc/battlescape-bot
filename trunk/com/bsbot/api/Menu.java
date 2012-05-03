@@ -53,9 +53,9 @@ public class Menu {
 		String actions[] = getValidMenuActions();
 		for (int i = 0; i < actions.length; i++) {
 			actions[i] = actions[i].toLowerCase();
-		////7	System.out.println(actions[i] + " " + action);
+
 			if (actions[i] != null && actions[i].contains(action)) {
-				////System.out.println("actions matched action (" +actions[i] + " " + action + " " + i);
+		
 				return atMenuItem(i);
 			}
 		}
@@ -68,11 +68,11 @@ public class Menu {
 		String actions[] = getValidMenuActions();
 		for (int i = 0; i < actions.length; i++) {
 			actions[i] = actions[i].toLowerCase();
-		////7	System.out.println(actions[i] + " " + action);
+
 			if (actions[i] != null && actions[i].contains(action)) {
 			
 				
-					return atMenuItem(i, inventory);////System.out.println("actions matched action (" +actions[i] + " " + action + " " + i);
+					return atMenuItem(i, inventory);
 			}
 		}
 
@@ -120,30 +120,10 @@ public class Menu {
 	}
 
 	public static Point getMenuLocation() {
-		//////int x = BSLoader.getClient().getMenuOffsetX();
+
 		int y = BSLoader.getClient().getMenuOffsetY();
 		int x = BSLoader.getClient().getMenuOffsetX();
-		/*if (screenArea == 0) {
-			x -= 4;
-			y -= 4;
-		}*/
-		/*if (screenArea == 1) {
-			x += 519;
-			y += 168;
-		}
-		if (screenArea == 2) {
-			x -= 17;
-			y -= 338;
-		}
-		if (screenArea == 3) {
-			x -= 519;
-			y += 0;
-		}
-		/*
-		 * if(screenArea == 0) { x += 4; y += 4; } else if(screenArea == 1) { x
-		 * += 549; y += 205; } else if(screenArea == 2) y += 338; else
-		 * if(screenArea == 3) { x += 519; y += 4; }
-		 */
+
 		return new Point(x, y);
 	}
 	
@@ -167,27 +147,23 @@ public class Menu {
 		String actions[] = getValidMenuActions();
 		try {
 			Point location = getMenuLocation();
-			/////System.out.println("orig loc:" + location);
+
 			int xOff=0;
 			int yOff=0;
-		////	if(BSLoader.getClient().getMenuScreenArea()==0){
-			////// xOff = 50;///random(20, getValidMenuActions()[i].length() * 4);
 
-			 ///yOff = 25 + (18*i);//// + nextInt(2, 10);
-		/////	}else{
+
+
 			if(inventory){
-				xOff = 60;///random(20, getValidMenuActions()[i].length() * 4);
+				xOff = 60;
 
-				 yOff = 15 + (20*i)+10;//-10;//+10;//// + nextInt(2, 10);
+				 yOff = 15 + (20*i)+10;
 			}else{
-				xOff = 60;///random(20, getValidMenuActions()[i].length() * 4);
+				xOff = 60;
 
-				 yOff = 15 + (20*i)-10;//-10;//+10;//// + nextInt(2, 10);
+				 yOff = 15 + (20*i)-10;
 			}
 			Mouse m = new Mouse();
-			Point p = new Point(location.x + xOff, location.y + yOff); ///x +  + xOff + 20
-			/////System.out.println(p);
-			////System.out.println("clickpoint:" + p);
+			Point p = new Point(location.x + xOff, location.y + yOff);
 			m.clickMouse(p, true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -204,22 +180,17 @@ public class Menu {
 		String actions[] = getValidMenuActions();
 		try {
 			Point location = getMenuLocation();
-			/////System.out.println("orig loc:" + location);
+
 			int xOff=0;
 			int yOff=0;
-		////	if(BSLoader.getClient().getMenuScreenArea()==0){
-			////// xOff = 50;///random(20, getValidMenuActions()[i].length() * 4);
 
-			////// yOff = 25 + (18*i)//// + nextInt(2, 10);
-		/////	}else{
-			xOff = 50;///random(20, getValidMenuActions()[i].length() * 4);
+			xOff = 50;
 
-			yOff = 15 + (20*i);//// + nextInt(2, 10);
-		//////	}
+			yOff = 15 + (20*i);
 				 
 				 
 			Mouse m = new Mouse();
-			Point p = new Point(location.x + xOff, location.y + yOff); ///x +  + xOff + 20
+			Point p = new Point(location.x + xOff, location.y + yOff); 
 			m.moveMouse(p);
 			try{
 				Thread.sleep(100);
@@ -227,7 +198,6 @@ public class Menu {
 				
 			}
 			m.clickMouse2(p, true);
-			/////System.out.println(p.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -238,17 +208,13 @@ public class Menu {
 	public String[] getItems() {
 		String[] actions;
 
-		/*
-		 * synchronized (menuCacheLock) { options = menuOptionsCache; actions =
-		 * menuActionsCache; }
-		 */
+
 		actions = BSLoader.getClient().getMenuActionNames();
 
 		ArrayList<String> output = new ArrayList<String>();
 
 		int len = actions.length;
 		for (int i = 0; i < len; i++) {
-			// /String option = options[i];
 			String action = actions[i];
 			if (action != null) {
 				String text = action;

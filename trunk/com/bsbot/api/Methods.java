@@ -16,8 +16,7 @@ import com.bsbot.wrappers.RSPlayer;
 
 public class Methods {
 
-	// A cache of all the interfaces. Only as big as the maximum size of the
-	// client's cache.
+
 	Calculations calc = new Calculations();
 	public Objects objects = new Objects(this);
 	public Inventory inventory = new Inventory(this);
@@ -29,7 +28,6 @@ public class Methods {
 	private RSInterface[] mainCache = new RSInterface[0];
 	public Skills skills = new Skills();
 	public GroundItems grounditems = new GroundItems();
-	// If it doesn't fit in the above cache.
 	private Map<Integer, RSInterface> sparseMap = new HashMap<Integer, RSInterface>();
 
 	public static void sleep(int time) {
@@ -96,22 +94,20 @@ public class Methods {
 		RSNPC cur = null;
 		int curX = getMyPlayer().getLocation().getX();
 		int curY = getMyPlayer().getLocation().getY();
-		// //// System.out.println("curX: " + curX + " curY: " +curY);
+
 		for (int i = 0; i < BSLoader.getClient().getNpcs().length; i++) {
 			Npc a = BSLoader.getClient().getNpcs()[i];
 			if (a != null && a.getDefinition() != null
 					&& a.getDefinition().getName() != null)
 				if (a.getDefinition().getName().equalsIgnoreCase(name)) {
 					int x, y;
-					/*
-					 * x = a.getX(); y = a.getY();
-					 */
+
 					RSNPC th = new RSNPC(a, i);
 					x = th.getLocation().getX();
 					y = th.getLocation().getY();
 					double distance = Math.sqrt((curX - x) * (curX - x)
 							+ (curY - y) * (curY - y));
-					// /////////System.out.println("Distance: " + distance);
+
 					if (distance < dist || dist == -1) {
 						dist = distance;
 						cur = new RSNPC(a, i);
@@ -127,22 +123,20 @@ public class Methods {
 		RSNPC cur = null;
 		int curX = getMyPlayer().getLocation().getX();
 		int curY = getMyPlayer().getLocation().getY();
-		// //// System.out.println("curX: " + curX + " curY: " +curY);
+
 		for (int i = 0; i < BSLoader.getClient().getNpcs().length; i++) {
 			if (i == id) {
 				Npc a = BSLoader.getClient().getNpcs()[i];
 				if (a != null && a.getDefinition() != null
 						&& a.getDefinition().getName() != null) {
 					int x, y;
-					/*
-					 * x = a.getX(); y = a.getY();
-					 */
+
 					RSNPC th = new RSNPC(a, i);
 					x = th.getLocation().getX();
 					y = th.getLocation().getY();
 					double distance = Math.sqrt((curX - x) * (curX - x)
 							+ (curY - y) * (curY - y));
-					// /////////System.out.println("Distance: " + distance);
+
 					if (distance < dist || dist == -1) {
 						dist = distance;
 						cur = new RSNPC(a, i);

@@ -13,16 +13,7 @@ import com.bsbot.wrappers.RSItem;
 
 public class Inventory {
 
-	/*
-	 * public RSItem[] getInventoryCache() { ArrayList<RSItem> list = new
-	 * ArrayList<RSItem>(); for (com.bsbot.hooks.RSInterface[] inface :
-	 * BSLoader.getClient() .getInterfaceCache()) { if (inface != null) { for
-	 * (com.bsbot.hooks.RSInterface iface2 : inface) { if (iface2.getInv() !=
-	 * null) { for (int a = 0; a < iface2.getInv().length; a++) { list.add(new
-	 * RSItem(iface2.getInv()[a])); } } } }
-	 * 
-	 * } return list.toArray(new RSItem[list.size()]); }
-	 */
+
 	static Methods methods;
 
 	public Inventory(Methods m) {
@@ -104,48 +95,24 @@ public class Inventory {
 		return null;
 	}
 
-	/*
-	 * public String getSelectedItemName() { return
-	 * BSLoader.getClient().getSelectedItem(); }
-	 */
+
 
 	public int[] getItemIds() {
 		return getInventoryCache();
 	}
 
-	/*
-	 * public int getStackSize(int slot) { int invCache[] =
-	 * BSLoader.getClient().getInterfaceCache()[3214] .getInvStackSizes();
-	 * return invCache[slot - 1] + 1; }
-	 */
-
-	/*
-	 * public void clickItemByName(String name) { int invCache[] =
-	 * BSLoader.getClient().getInterfaceCache()[3214].getInvStackSizes(); for
-	 * (int i = 0; i < invCache.length; i++) { System.out.println(invCache[i]);
-	 * } }
-	 */
 
 	public static void interactSlotBank(int slot, String action) {
 		if (Menu.isOpen()) {
 			n.moveMouse(new Point(10, 10));
 			methods.sleep(1000);
 		}
-		/*
-		 * if (BSLoader.getClient().getOpenTab() != 3){
-		 * 
-		 * n.mouse(new Point(nextInt(627, 654), nextInt(169, 196)),
-		 * n.LEFT_BUTTON); }
-		 */
-		// /////System.out.println("clicking mouse");
+
 		Point p = getInventoryItemPoint(slot);
 		n.moveMouse(p);
 		methods.sleep(1000);
-		// n.mouse(p, n.LEFT_BUTTON);
 		n.clickMouse(p, false);
-		// }// //(getInventoryItemPoint(slot),
 		methods.sleep(1000);
-		// //System.out.println("in menu.interact()");
 		Menu.interact(action, false);
 	}
 	
@@ -154,18 +121,11 @@ public class Inventory {
 			n.moveMouse(new Point(10, 10));
 			methods.sleep(1000);
 		}
-		/*
-		 * if (BSLoader.getClient().getOpenTab() != 3){
-		 * 
-		 * n.mouse(new Point(nextInt(627, 654), nextInt(169, 196)),
-		 * n.LEFT_BUTTON); }
-		 */
-		// /////System.out.println("clicking mouse");
+
 		Point p = getInventoryItemPoint(slot);
 		n.moveMouse(p);
 		methods.sleep(150);
         String actions[] = Menu.getValidMenuActions();
-    ///////	System.out.println(actions[0]);
     	for(int i = 0; i < actions.length; i++){
     		actions[i] = actions[i].toLowerCase();
     	}
@@ -176,12 +136,8 @@ public class Inventory {
             n.clickMouse(p, true);
             return;
         }
-		///methods.sleep(1000);
-		// n.mouse(p, n.LEFT_BUTTON);
 		n.clickMouse(p, false);
-		// }// //(getInventoryItemPoint(slot),
 		methods.sleep(1000);
-		// //System.out.println("in menu.interact()");
 		Menu.interact(action, true);
 	}
 	
@@ -198,7 +154,6 @@ public class Inventory {
 			int slotItem = getSlotItem(i);
 			if (slotItem != except && slotItem != -1) {
 				interactSlot(i, "Drop");
-				// /sleep(nextInt(500, 850));
 			}
 		}
 
@@ -255,12 +210,6 @@ public class Inventory {
 		n.clickMouse(getInventoryItemPoint(slot), false);
 	}
 
-	/*
-	 * public RSComponent getInterface() { RSInterface in = new
-	 * RSInterface(3123);
-	 * 
-	 * return new RSComponent(in., 3123); }
-	 */
 
 	public RSItem[] getItems() {
 		final List<RSItem> out = new ArrayList<RSItem>();

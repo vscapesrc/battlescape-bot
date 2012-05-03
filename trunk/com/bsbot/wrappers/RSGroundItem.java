@@ -38,8 +38,7 @@ public class RSGroundItem {
 				.getX() - BSLoader.getClient().getBaseX()) + 0.5D) * 128D,
 				((double) (getLocation().getY() - BSLoader.getClient()
 						.getBaseY()) + 0.5D) * 128D, 0);
-		// /System.out.println("grounditem world:" + getWorldX() + " world: " +
-		// getWorldY());
+
 		return screenPoint;
 	}
 
@@ -50,7 +49,6 @@ public class RSGroundItem {
 			if (Menu.isOpen()) {
 				System.out.println("menu is open");
 			}
-			// Mouse.moveMouseRandomly(450);
 			m.moveMouse(p);
 			BSLoader.getMethods().sleep(300);
 			String actions[] = Menu.getValidMenuActions();

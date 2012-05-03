@@ -65,9 +65,7 @@ public class Objects {
 					&& a.getName() != null)
 				if (a.getName().equalsIgnoreCase(name)) {
 					int x, y;
-					/*
-					 * x = a.getX(); y = a.getY();
-					 */
+
 					x = a.getLocation().getX();
 					y = a.getLocation().getY();
 					double distance = Math.sqrt((curX - x) * (curX - x)
@@ -78,14 +76,7 @@ public class Objects {
 					}
 				}
 		}
-	/*	for(RSObject obj : all){
-			if(obj.getName().equalsIgnoreCase(name)){
-				if(Calculations.distanceBetween(Methods.getMyPlayer().getLocation(), obj.getLocation()) < maxDist){
-					maxDist = Calculations.distanceBetween(Methods.getMyPlayer().getLocation(), obj.getLocation());
-					returnObj = obj;
-				}
-			}
-		}*/
+
 		return cur;
 	}
 
@@ -108,9 +99,7 @@ public class Objects {
 		return temp.toArray(new RSObject[temp.size()]);
 	}
 
-	/*
-	 * public static RSObject[] getAll(){ return getAll(52); }
-	 */
+
 
 
 	private static RSObject[] getAtLocal(int x, int y) {
@@ -129,7 +118,6 @@ public class Objects {
 				x += BSLoader.getClient().getBaseX();
 				y += BSLoader.getClient().getBaseY();
 
-				// Interactable (e.g. Trees)
 					for(GameObject obj : rsGround.getGround()){
 						if (obj != null && obj instanceof GameObject) {
 							if (obj.getId() != -1) {

@@ -5,21 +5,10 @@ import java.util.ArrayList;
 import com.bsbot.hooks.GameInterface;
 import com.bsbot.launcher.BSLoader;
 
-/**
- * Represents an interface. Each interface consists of a group of components.
- * 
- * @author Qauters
- */
+
 public class RSInterface {
 
-	/**
-	 * Cache of this interface's children.
-	 */
 
-
-	/**
-	 * The index of this interface.
-	 */
 	private int index;
 
 	private com.bsbot.hooks.GameInterface[] ifaceHook;
@@ -39,12 +28,6 @@ public class RSInterface {
 	}
 	
 
-	/*
-	 * public String[] getActions(){ return ifaceHook.getActions(); }
-	 * 
-	 * 
-	 * public String getMessage(){ return ifaceHook.getText(); }
-	 */
 
 	public GameInterface[] getParentInterface() {
 		return ifaceHook;
@@ -62,9 +45,7 @@ public class RSInterface {
 		return index;
 	}
 
-	/**
-	 * @inheritDoc java/lang/Object#equals(java/lang/Object)
-	 */
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == this) {
@@ -77,9 +58,7 @@ public class RSInterface {
 		return false;
 	}
 
-	/**
-	 * @inheritDoc java/lang/Object#hashCode()
-	 */
+
 	@Override
 	public int hashCode() {
 		return index;

@@ -62,37 +62,31 @@ public class RSBankItem {
 		if (Menu.isOpen()) {
 			n.moveMouse(new Point(10, 10));
 		}
-		/*
-		 * if (BSLoader.getClient().getOpenTab() != 3){
-		 * 
-		 * n.mouse(new Point(nextInt(627, 654), nextInt(169, 196)),
-		 * n.LEFT_BUTTON); }
-		 */
-		// /////System.out.println("clicking mouse");
+
 		try{
 		Point p = getPoint();
 		n.moveMouse(p);
 		Thread.sleep(100);
-		// n.mouse(p, n.LEFT_BUTTON);
+
 		n.clickMouse(p, false);
-		// }// //(getInventoryItemPoint(slot),
+
 
 			Thread.sleep(1000);
 		}catch(Exception e){
 			
 		}
-		// //System.out.println("in menu.interact()");
+
 		Menu.interact(action, false);
 	}
 	
 	public Point getPoint() {
 		int theSlot = slot;
 		Random r = new Random();
-		int col = theSlot-- % 8;///--theSlot % 8;
+		int col = theSlot-- % 8;
 		int row = theSlot / 8;
-		int x = 73 + col * 49;/// - 10 + r.nextInt(6);
-		int y = 63 + (row * 39) + r.nextInt(6);// + 40;
-		///////System.out.println("y: " +y + " row*38 " + (row*38));
+		int x = 73 + col * 49;
+		int y = 63 + (row * 39) + r.nextInt(6);
+
 		return new Point(x+10, y);
 	}
 
