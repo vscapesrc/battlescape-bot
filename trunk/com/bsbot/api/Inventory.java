@@ -20,6 +20,12 @@ public class Inventory {
 		methods = m;
 	}
 	
+	/**
+	 * 
+	 * @param name of the item
+	 * @return whether inventory contains the item with the given name
+	 */
+	
 	public boolean containsItem(String name){
 		for(RSItem item : getItems()){
 			if(item.getName().equalsIgnoreCase(name)){
@@ -28,8 +34,9 @@ public class Inventory {
 		}
 		return false;
 	}
+	
 
-	public int[] getInventoryCache() {
+	private int[] getInventoryCache() {
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		for (com.bsbot.hooks.GameInterface[] inface : BSLoader.getClient()
 				.getInterfaceCache()) {
@@ -59,7 +66,7 @@ public class Inventory {
 		return convertIntegers(list);
 	}
 
-	public int[] convertIntegers(List<Integer> integers) {
+	private int[] convertIntegers(List<Integer> integers) {
 		int[] ret = new int[integers.size()];
 		Iterator<Integer> iterator = integers.iterator();
 		for (int i = 0; i < ret.length; i++) {
@@ -68,13 +75,18 @@ public class Inventory {
 		return ret;
 	}
 
-	public final int INTERFACE_INVENTORY = 149;
+	private final int INTERFACE_INVENTORY = 149;
 
-	static Mouse n = new Mouse();
+	private static Mouse n = new Mouse();
 
 	public Inventory() {
 	}
 
+	/**
+	 * 
+	 * @param name of the item wanted
+	 * @return instance of rsitem with the given name
+	 */
 	public RSItem getItem(String name) {
 		for (RSItem one : getItems()) {
 			if (one != null && one.getId() != -1 && one.getName() != null) {
@@ -86,6 +98,12 @@ public class Inventory {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @param id of the item wanted
+	 * @return instance of rsitem with the given id
+	 */
+	
 	public RSItem getItem(int id) {
 		for (RSItem one : getItems()) {
 			if (one != null && one.getId() != -1 && one.getId() == id) {
@@ -96,10 +114,7 @@ public class Inventory {
 	}
 
 
-
-	public int[] getItemIds() {
-		return getInventoryCache();
-	}
+	
 
 
 	public static void interactSlotBank(int slot, String action) {
@@ -142,12 +157,22 @@ public class Inventory {
 	}
 	
 	
+	/**
+	 * does the given action to the item with given id
+	 * @param id of the item
+	 * @param action the action we want to do
+	 */
 
 	public void interact(int id, String action) {
 		if (getFirstSlotWith(id) != -1) {
 			interactSlot(getFirstSlotWith(id), action);
 		}
 	}
+	
+	/**
+	 * Drops all except the given id
+	 * @param except the ids not to be dropped
+	 */
 
 	public void dropAllBut(int except) {
 		for (int i = 1; i < 27; i++) {
@@ -158,6 +183,10 @@ public class Inventory {
 		}
 
 	}
+	
+	/**
+	 * Drops everything in inventory
+	 */
 
 	public void dropAll() {
 		for (int i = 1; i < 27; i++) {

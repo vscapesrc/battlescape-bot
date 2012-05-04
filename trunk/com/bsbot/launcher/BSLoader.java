@@ -1,13 +1,16 @@
 package com.bsbot.launcher;
 
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
+
+
+
+
 
 import java.applet.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.lang.annotation.Annotation;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Hashtable;
@@ -20,17 +23,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
-import scripts.AIOFighter;
 import scripts.AIOFisher;
-import scripts.BankTest;
-import scripts.BarbarianAgility;
 import scripts.Cooker;
 import scripts.Script;
-import scripts.Thief;
+import scripts.ScriptManifest;
 
 import com.bsbot.api.Methods;
 import com.bsbot.hooks.Client;
 import com.bsbot.hooks.GameInterface;
+import com.bsbot.scriptmanager.ScriptManager;
 import com.bsbot.wrappers.RSBankItem;
 import com.bsbot.wrappers.RSGroundItem;
 import com.bsbot.wrappers.RSInterface;
@@ -49,6 +50,7 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 	private static Methods m = new Methods();
 	static Script runningScript = null;
 	static JButton input = new JButton("User input off");
+	ScriptManager sm = new ScriptManager();
 
 	static JMenuBar menuBar = new JMenuBar();
 	static JMenu menu = new JMenu("File");
@@ -57,7 +59,8 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 	static JMenuItem debugItem = new JMenuItem("Debug");
 	static JMenuItem quit = new JMenuItem("Quit");
 
-	boolean debug = false; /// set to true if you want to see stuff like players, npcs, interfaces etc with number keys
+	boolean debug = false; // / set to true if you want to see stuff like
+							// players, npcs, interfaces etc with number keys
 
 	private static String[] titles = new String[] {
 			"BattleScape bot - botting for wild pkers",
@@ -94,10 +97,12 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 		start.addActionListener(this);
 		stop.addActionListener(this);
 		debugItem.addActionListener(this);
+		sm.makeDirectories(); // make the bot dirs
+		sm.makeCompilers(); // make the compilers for scripts
+		sm.writeCompilers();
 	}
 
 	public static void main(String args[]) {
-
 
 		java.util.Random r = new java.util.Random();
 		int random = r.nextInt(titles.length);
@@ -166,69 +171,75 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 		a.put("worldid", "1");
 	}
 
+	public String getClassAnnotationValue(Class classType,
+			Class annotationType, String attributeName) {
+		String value = null;
+
+		Annotation annotation = classType.getAnnotation(annotationType);
+		if (annotation != null) {
+			try {
+				value = (String) annotation.annotationType()
+						.getMethod(attributeName).invoke(annotation);
+			} catch (Exception ex) {
+			}
+		}
+
+		return value;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println(e.getActionCommand());
-		if(e.getActionCommand().equals("Debug")){
+		if (e.getActionCommand().equals("Debug")) {
 			System.out.println("debug is here");
-			if(!debug){
+			if (!debug) {
 				debug = true;
 				loader.addKeyListener(k);
-			}else{
+			} else {
 				System.out.println(debug);
 				loader.removeKeyListener(k);
 			}
 		}
 		if (e.getActionCommand().equals("Start script")) {
 			Thread s = null;
-			if (runningScript != null) {
-			}
 			if (runningScript == null) {
 				String a = JOptionPane.showInputDialog(null,
 						"What script do you want to run? (fisher, cooker)");
-
 				if (a != null) {
 					a = a.toLowerCase();
-					if (a.equals("fisher")) {
+					if (a.equals("fisher")) { // these are the scripts that are included
 						runningScript = new AIOFisher();
-						s = new Thread(runningScript, "Script");
-						s.start();
-					} else if (a.equals("agility")) {
-						runningScript = new BarbarianAgility();
-						s = new Thread(runningScript, "Script");
-						s.start();
-					}else if(a.equalsIgnoreCase("fighter")){ 
-						runningScript = new AIOFighter();
-						s = new Thread(runningScript, "Script");
-						s.start();
-					} else if (a.equals("thief")) {
-						runningScript = new Thief();
-						s = new Thread(runningScript, "Script");
-						s.start();
-					} else if (a.equals("aiofisher")) {
-						runningScript = new AIOFisher();
-						s = new Thread(runningScript, "Script");
-						s.start();
-					} else if (a.equals("bankingtest")) {
-						runningScript = new BankTest();
 						s = new Thread(runningScript, "Script");
 						s.start();
 					} else if (a.equals("cooker")) {
 						runningScript = new Cooker();
 						s = new Thread(runningScript, "Script");
 						s.start();
+					} else {
+						Class<Script>[] scriptClasses = sm.getClassesFromFolder(); //load custom scripts from folder
+						for (Class<Script> sc : scriptClasses) {
+							if (sc.isAnnotationPresent(ScriptManifest.class)) {
+								String scriptName = getClassAnnotationValue(sc,
+										ScriptManifest.class, "name")
+										.toLowerCase();
+								if (sc != null && scriptName.contains(a)) {
+									runningScript = sm.getScriptForClass(sc);
+									s = new Thread(runningScript, "Script");
+									s.start();
+								}
+							}
+						}
 					}
 				}
 			}
+
 		} else if (e.getActionCommand().equals("Stop script")) {
-			runningScript.stop();
-			runningScript = null;
+			if (runningScript != null) {
+				runningScript.stop();
+				runningScript = null;
+			}
 		}
 	}
-
-
-
-
 
 	public class Keys implements KeyListener {
 
@@ -238,12 +249,12 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 			switch (id) {
 
 			case KeyEvent.VK_6:
-					for (RSGroundItem gi : getMethods().grounditems.getAll()) {
-						if (gi != null) {
-							System.out.println("groundItem: " + gi.getName()
-									+ " at: " + gi.getLocation());
-						}
+				for (RSGroundItem gi : getMethods().grounditems.getAll()) {
+					if (gi != null) {
+						System.out.println("groundItem: " + gi.getName()
+								+ " at: " + gi.getLocation());
 					}
+				}
 				break;
 			case KeyEvent.VK_2:
 				System.out.println(getClient().getPlane());
@@ -253,14 +264,13 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 						+ "/" + Methods.getMyPlayer().getMaxHealth());
 				break;
 
-
 			case KeyEvent.VK_4:
 				Interfaces i = new Interfaces();
 				for (RSInterface inv : i.getAllParents()) {
 					for (RSInterfaceChild child : inv.getChildren()) {
 						if (child != null && child.getText() != null) {
-								System.out.println(child.getText() + " id: "
-										+ child.getId());
+							System.out.println(child.getText() + " id: "
+									+ child.getId());
 						}
 					}
 				}
@@ -292,10 +302,7 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 							+ bo.getPoint());
 				}
 
-
-
 				break;
-
 
 			}
 

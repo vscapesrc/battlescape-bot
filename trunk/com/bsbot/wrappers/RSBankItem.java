@@ -47,6 +47,8 @@ public class RSBankItem {
 	}
 	
 	
+	
+	
 	public String getName() {
 		if(itemDef != null && itemDef.getName() != null){
 		return itemDef.getName();

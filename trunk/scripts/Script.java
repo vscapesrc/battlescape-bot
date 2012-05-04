@@ -11,23 +11,10 @@ import com.bsbot.launcher.BSLoader;
 
 public abstract class Script extends Methods implements Runnable {
 
-	public String[] getDefinition() {
-		String[] returnString = null;
-		returnString[0] = scriptName();
-		returnString[1] = description();
-		returnString[2] = author();
 
-		return returnString;
-
-	}
 
 	public abstract void paint(Graphics g);
 
-	public abstract String author();
-
-	public abstract String scriptName();
-
-	public abstract String description();
 
 	public abstract int loop();
 

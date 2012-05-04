@@ -17,57 +17,69 @@ public class Camera
     	
     }
     
+    /**
+     * Turns the camera to given entity
+     * @param c the entity
+     */
+    
 	public void turnTo(final RSEntity c) {
 		int angle = getCharacterAngle(c);
 		setCameraRotation(angle);
 	}
 	
-	public int getCharacterAngle(RSEntity n) {
+	private int getCharacterAngle(RSEntity n) {
 		return getTileAngle(n.getLocation());
 	}
 	
-	public int getTileAngle(RSTile t) {
+	
+	
+	private int getTileAngle(RSTile t) {
 		int a = (accessor.calc.angleToTile(t) - 90) % 360;
 		return a < 0 ? a + 360 : a;
 	}
+	
+	/**
+	 * Turns the camera to the given rsobject
+	 * @param o the rsobject to be turned to
+	 */
 	
 	public void turnTo(final RSObject o) {
 		int angle = getObjectAngle(o);
 		setCameraRotation(angle);
 	}
 	
-	public int getObjectAngle(RSObject o) {
+	private int getObjectAngle(RSObject o) {
 		return getTileAngle(o.getLocation());
 	}
 	
 
-    public int getCameraYaw()
+    private int getCameraYaw()
     {
         return BSLoader.getClient().getXCameraCurve();
     }
 
 
-    public int getCameraPitch()
+    private int getCameraPitch()
     {
         return BSLoader.getClient().getYCameraCurve();
     }
 
-    public int getCameraX()
+    private int getCameraX()
     {
         return BSLoader.getClient().getXCameraPos();
     }
 
-    public int getCameraY()
+    private int getCameraY()
     {
         return BSLoader.getClient().getYCameraPos();
     }
 
-    public static int getCameraZ()
+    private static int getCameraZ()
     {
         return BSLoader.getClient().getZCameraPos();
     }
 
-    public int getCameraAngle()
+    private int getCameraAngle()
     {
         double mapAngle = getCameraYaw();
         mapAngle /= 2040D;
@@ -75,7 +87,7 @@ public class Camera
         return (int)mapAngle;
     }
 
-    public void setCameraRotation(int degrees)
+    private void setCameraRotation(int degrees)
     {
         char left = '%';
         char right = '\'';
@@ -110,6 +122,11 @@ public class Camera
         }
         accessor.keyboard.releaseKey(whichDir);
     }
+    
+    /**
+     * Turns the camera to the given direction(n, e, s, w)
+     * @param direction the direction to be turned to
+     */
 
     public void setCompass(char direction)
     {
@@ -137,7 +154,7 @@ public class Camera
         }
     }
 
-    public boolean setCameraAltitude(boolean up)
+    private boolean setCameraAltitude(boolean up)
     {
         try
         {
@@ -153,7 +170,7 @@ public class Camera
         return true;
     }
 
-    public boolean setCameraAltitude(double altPercent)
+    private boolean setCameraAltitude(double altPercent)
     {
         int alt = (int)((altPercent / 100D) * -1237D - 1226D);
         int curAlt = getCameraZ();
@@ -187,7 +204,7 @@ public class Camera
         return true;
     }
 
-    public static int nextInt(int min, int max)
+    private static int nextInt(int min, int max)
     {
         return (int)(Math.random() * (double)(max - min)) + min;
     }

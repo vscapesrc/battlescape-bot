@@ -9,6 +9,12 @@ import com.bsbot.wrappers.RSInterface;
 import com.bsbot.wrappers.RSItem;
 
 public class Interfaces {
+	
+	/**
+	 * @author Kubko
+	 * NOTE: INTERFACES ARE NOT WORKING 100% YET; WILL BE LOOKED INTO IN THE FUTURE
+	 */
+	
 	private Methods methods;
 	
 	public Interfaces(Methods m){
@@ -18,7 +24,10 @@ public class Interfaces {
 	public Interfaces(){
 		
 	}
-	
+	/**
+	 * 
+	 * @return the list of all interface parents
+	 */
 	public RSInterface[] getAllParents(){
 		GameInterface[][] cache = BSLoader.getClient().getInterfaceCache();
 		List<RSInterface> list = new ArrayList<RSInterface>();
@@ -31,6 +40,12 @@ public class Interfaces {
 		
 		return list.toArray(new RSInterface[list.size()]);
 	}
+	
+	/**
+	 * 
+	 * @param id of the interface
+	 * @return whether the interface with the given id is open
+	 */
 	
 	public boolean isInterfaceOpen(int id){
 		RSInterface[] cache = getAllParents();
