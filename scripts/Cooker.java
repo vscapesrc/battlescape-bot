@@ -156,23 +156,7 @@ public class Cooker extends Script {
 		}
 	}
 
-	@Override
-	public String author() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public String scriptName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String description() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public int loop() {

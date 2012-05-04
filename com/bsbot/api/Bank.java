@@ -17,6 +17,10 @@ public class Bank {
 	public Bank(Methods m) {
 		this.methods = m;
 	}
+	
+	/**
+	 * Deposits all items from the inventory
+	 */
 
 	public void depositAll() {
 		if (isOpen()) {
@@ -28,8 +32,12 @@ public class Bank {
 		}
 	}
 
+	/**
+	 *
+	 * @return The bank cache, used by internal operations
+	 */
 
-	public int[] getBankCache() {
+	private int[] getBankCache() {
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		for (com.bsbot.hooks.GameInterface[] inface : BSLoader.getClient()
 				.getInterfaceCache()) {
@@ -51,12 +59,15 @@ public class Bank {
 		return convertIntegers(list);
 	}
 
-
+	/**
+	 * 
+	 * @return
+	 */
 	public int getBankCount() {
 		return getBankItems().length;
 	}
 
-	public int[] convertIntegers(List<Integer> integers) {
+	private int[] convertIntegers(List<Integer> integers) {
 		int[] ret = new int[integers.size()];
 		Iterator<Integer> iterator = integers.iterator();
 		for (int i = 0; i < ret.length; i++) {
@@ -64,6 +75,11 @@ public class Bank {
 		}
 		return ret;
 	}
+	
+	/**
+	 * Deposits all items to the bank except ones given
+	 * @param names names of items not to be deposited
+	 */
 
 	public void depositAllExcept(String... names) {
 		int len = names.length;
@@ -112,9 +128,20 @@ public class Bank {
 	}
 
 
+	/**
+	 * 
+	 * @return whether the bank is open
+	 */
+	
 	public boolean isOpen() {
 		return methods.interfaces.isInterfaceOpen(114);
 	}
+	
+	/**
+	 * 
+	 * @param name name of the bank item. NOTE bank items are not fully working yet, it has to be visible.
+	 * @return the bank item specified, if not found returns null.
+	 */
 
 	public RSBankItem getItem(String name) {
 		name = name.toLowerCase();
@@ -126,6 +153,11 @@ public class Bank {
 		}
 		return null;
 	}
+	
+	/**
+	 * 
+	 * @return All the bank items in bank.
+	 */
 
 	public RSBankItem[] getBankItems() {
 		ArrayList<RSBankItem> list = new ArrayList<RSBankItem>();

@@ -18,6 +18,12 @@ public class GroundItems {
 
 	public GroundItems() {
 	}
+	
+	/**
+	 *
+	 * @param id the id of ground item wanted
+	 * @return the nearest ground item with the given id
+	 */
 
 	public RSGroundItem getNearest(int id) {
 		RSGroundItem returnItem = null;
@@ -47,6 +53,12 @@ public class GroundItems {
 
 		return returnItem;
 	}
+	
+	/**
+	 *
+	 * @param id the name of ground item wanted
+	 * @return the nearest ground item with the given name
+	 */
 
 	public RSGroundItem getNearest(String name) {
 		RSGroundItem returner = null;
@@ -63,6 +75,11 @@ public class GroundItems {
 		}
 		return returner;
 	}
+	
+	/**
+	 * 
+	 * @return all the ground items
+	 */
 
 	public RSGroundItem[] getAll() {
 		ArrayList<RSGroundItem> temp = new ArrayList<RSGroundItem>();
@@ -88,7 +105,7 @@ public class GroundItems {
 		return temp.toArray(new RSGroundItem[temp.size()]);
 	}
 
-	public RSGroundItem[] getGroundItemsAt(int x, int y) {
+	private RSGroundItem[] getGroundItemsAt(int x, int y) {
 		NodeList nl = BSLoader.getClient().getGroundArray()[BSLoader
 				.getClient().getPlane()][x][y];
 		if (nl == null) {

@@ -245,23 +245,6 @@ public class AIOFisher extends Script {
 	public void onFinish() {
 	}
 
-	@Override
-	public String author() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String scriptName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String description() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public class GUI extends JFrame {
 		public GUI() {
