@@ -7,7 +7,12 @@ The API is almost the same as RSBot/powerbot. This guide will be finished later
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+To start, you will need to go to your script dir. Before doing anything, run the bot atleast once so the directory structure is made.
+On Windows, this is done by going to run -> %APPDATA% -> bsbot
+On Linux or Mac, this is done by going to your home directory -> bsbot
+
+You will need to get the latest version of the bot .jar, copy it to the directory 'jar' and rename it to BSBot.jar
+
+After that, you will need to write a script, here's an example:
+
+http://code.google.com/p/battlescape-bot/source/browse/trunk/scripts/AIOFisher.java
