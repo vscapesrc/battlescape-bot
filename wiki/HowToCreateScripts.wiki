@@ -13,6 +13,7 @@ On Linux or Mac, this is done by going to your home directory -> bsbot
 
 You will need to get the latest version of the bot .jar, copy it to the directory 'jar' and rename it to BSBot.jar
 
-After that, you will need to write a script, here's an example:
+After that, you will need to write a script, here are some examples:
 
 http://code.google.com/p/battlescape-bot/source/browse/trunk/scripts/AIOFisher.java
+http://pastebin.com/raw.php?i=SnA3GnPN
