@@ -15,5 +15,5 @@ You will need to get the latest version of the bot .jar, copy it to the director
 
 After that, you will need to write a script, here are some examples:
 
-http://code.google.com/p/battlescape-bot/source/browse/trunk/scripts/AIOFisher.java
+http://code.google.com/p/battlescape-bot/source/browse/trunk/scripts/AIOFisher.java <br>
 http://pastebin.com/raw.php?i=SnA3GnPN
