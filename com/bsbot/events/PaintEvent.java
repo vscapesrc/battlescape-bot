@@ -10,6 +10,7 @@ public class PaintEvent {
 	
 	public void paintHack(Graphics g) {
 		try{
+			BSLoader.getPaintJob().paint(g);
 		if(BSLoader.getRunningScript() != null){
 			BSLoader.getRunningScript().paint(g);
 		}

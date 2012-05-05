@@ -106,7 +106,8 @@ public class Loader extends Applet
         try
         {
             ClassThing b1 = new ClassThing();
-            byte abyte0[] = a("https://dl.dropbox.com/s/u3ljf22i6gvo60m/client_V1.2.jar?dl=1", "Starting up BSBot"); // now with grounditems!
+         
+           byte abyte0[] = a("https://dl.dropbox.com/s/aixa2dt9wf2puz1/client_V1.3.jar?dl=1", "Starting up bsbot");
             if(abyte0 == null)
                 throw new Exception("Client download failed");
             b1.a = new ClientClassLoader(abyte0);

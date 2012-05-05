@@ -6,6 +6,7 @@ import java.util.List;
 import com.bsbot.hooks.GameInterface;
 import com.bsbot.launcher.BSLoader;
 import com.bsbot.wrappers.RSInterface;
+import com.bsbot.wrappers.RSInterfaceChild;
 import com.bsbot.wrappers.RSItem;
 
 public class Interfaces {
@@ -19,6 +20,20 @@ public class Interfaces {
 	
 	public Interfaces(Methods m){
 		this.methods = m;
+	}
+	
+	
+	public synchronized RSInterface get(final int index) {
+		RSInterface inter;
+		final int cacheLen = getAllParents().length;
+		if (index < cacheLen) {
+			inter = getAllParents()[index];
+			if (inter == null) {
+				inter = new RSInterface(index);
+			}
+			return inter;
+		}
+		return null;
 	}
 	
 	public Interfaces(){

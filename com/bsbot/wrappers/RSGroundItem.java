@@ -38,6 +38,7 @@ public class RSGroundItem {
 				.getX() - BSLoader.getClient().getBaseX()) + 0.5D) * 128D,
 				((double) (getLocation().getY() - BSLoader.getClient()
 						.getBaseY()) + 0.5D) * 128D, 0);
+		//Point screenPoint = Calculations.tileToScreen(getLocation());
 
 		return screenPoint;
 	}
@@ -45,10 +46,12 @@ public class RSGroundItem {
 	public void interact(String action) {
 		Point p = getScreenLocation();
 		System.out.println(p);
-		if (Calculations.pointOnScreen(p)) {
+		if (Calculations.pointOnGameScreen(p)) {
+			System.out.println("point on screen");
 			if (Menu.isOpen()) {
 				System.out.println("menu is open");
 			}
+			System.out.println("moving to p");
 			m.moveMouse(p);
 			BSLoader.getMethods().sleep(300);
 			String actions[] = Menu.getValidMenuActions();
@@ -58,14 +61,25 @@ public class RSGroundItem {
 				actions[i] = actions[i].toLowerCase();
 			}
 			action = action.toLowerCase();
-			if (actions[0] != null && actions[0].contains(action + " " + getName())) {
+			if (actions[0] != null && actions[0].contains(action) && actions[0].contains(getName())) {
 				System.out.println(actions[0]);
+				m.moveMouse(p);
+				try{
+					Thread.sleep(300);
+				}catch(Exception e){
+					
+				}
 				m.clickMouse(p, true);
 				return;
 			}
+			m.moveMouse(p);
 			m.clickMouse(p, false);
-			BSLoader.getMethods().sleep(700);
-			Menu.interact(action + " " + getName().toLowerCase());
+			try{
+			Thread.sleep(700);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			Menu.interact(action + " " + getName());
 		} else {
 			Point mm = Calculations.tileToMinimap(getLocation());
 			if (mm.x != -1 && mm.y != -1)
