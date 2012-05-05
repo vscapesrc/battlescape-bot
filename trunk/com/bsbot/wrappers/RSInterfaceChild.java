@@ -3,6 +3,7 @@ package com.bsbot.wrappers;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import com.bsbot.api.Interfaces;
 import com.bsbot.hooks.GameInterface;
 import com.bsbot.hooks.ItemDef;
 import com.bsbot.input.Mouse;
@@ -24,11 +25,11 @@ public class RSInterfaceChild {
 	}
 	
 	public int getScreenX(){
-		return accessor.getX();
+		return accessor.getX()+getAccessor().getXOffset();
 	}
 	
 	public int getScreenY(){
-		return accessor.getY();
+		return accessor.getY()+getAccessor().getYOffset();
 	}
 	
 	public GameInterface getAccessor(){
@@ -52,12 +53,37 @@ public class RSInterfaceChild {
 		return accessor.getId();
 	}
 	
+	public int getAbsoluteX() {
+		// Get internal Interface
+		GameInterface inter = accessor;
+		if (inter == null) {
+			return -1;
+		}
+
+		// Define x
+		int x=0;
+
+		return x+1;
+	}
+	
+	
 	public Rectangle getArea() {
 		return new Rectangle(accessor.getX(), accessor.getY(), accessor.getWidth(), accessor.getHeight());
 	}
 	
 	public String getText(){
+		if(accessor.getText() != null){
 		return accessor.getText();
+		}
+		return "";
+	}
+	
+	public int getType(){
+		return accessor.getType();
+	}
+	
+	public String[] getActions(){
+		return accessor.getActions();
 	}
 	
 	public boolean doClick(boolean leftClick) {

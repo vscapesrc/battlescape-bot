@@ -2,6 +2,7 @@ package scripts;
 
 import java.awt.Graphics;
 
+import scripts.randoms.AntiMod;
 import scripts.randoms.LevelUp;
 import scripts.randoms.NumberRandom;
 import scripts.randoms.Random;
@@ -34,7 +35,7 @@ public abstract class Script extends Methods implements Runnable {
 		running = false;
 	}
 
-	Random[] randoms = new Random[2];// = new NumberRandom();
+	Random[] randoms = new Random[3];// = new NumberRandom();
 
 	public void setRunning() {
 		running = true ? running == false : running == true;
@@ -52,6 +53,8 @@ public abstract class Script extends Methods implements Runnable {
 				///Thread s = new Thread(randoms[0], "NumberRandom");
 				////s.start();
 				randoms[1] = new LevelUp();
+				randoms[2] = new AntiMod();
+				//randoms[2] = new AntiMod();
 			///	Thread l = new Thread(randoms[1], "LevelUp");
 			/////	l.start();
 

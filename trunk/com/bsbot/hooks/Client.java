@@ -18,6 +18,8 @@ public interface Client extends RSApplet{
 	
 	public boolean isLoggedIn();
 	
+	public Player[] getPlayers();
+	
 	public String getLoginMessage2();
 	
 	public boolean isMenuOpen();

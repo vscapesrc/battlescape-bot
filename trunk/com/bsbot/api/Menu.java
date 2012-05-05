@@ -186,7 +186,7 @@ public class Menu {
 
 			xOff = 50;
 
-			yOff = 15 + (20*i);
+			yOff = 20 + (20*i);
 				 
 				 
 			Mouse m = new Mouse();

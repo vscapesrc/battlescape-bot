@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.bsbot.hooks.Npc;
+import com.bsbot.hooks.Player;
 import com.bsbot.input.Keyboard;
 import com.bsbot.input.Mouse;
 import com.bsbot.launcher.BSLoader;
@@ -43,6 +44,15 @@ public class Methods {
 
 	public static RSPlayer getMyPlayer() {
 		return new RSPlayer(BSLoader.getClient().getMyPlayer());
+	}
+	
+	public RSPlayer[] getAllPlayers(){
+		ArrayList<RSPlayer> all = new ArrayList<RSPlayer>();
+		for(Player p : BSLoader.getClient().getPlayers()){
+			RSPlayer pl = new RSPlayer(p);
+			all.add(pl);
+		}
+		return all.toArray(new RSPlayer[all.size()]);
 	}
 
 	public synchronized RSInterface[] getAll() {

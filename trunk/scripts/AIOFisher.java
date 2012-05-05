@@ -35,6 +35,8 @@ import com.bsbot.wrappers.RSNPC;
 import com.bsbot.wrappers.RSObject;
 import com.bsbot.wrappers.RSTile;
 
+
+
 public class AIOFisher extends Script {
 
 	public String state;
@@ -167,11 +169,12 @@ public class AIOFisher extends Script {
 				} else {
 					state = "Turning camera to bank";
 					camera.turnTo(bank);
+					return 600;
 				}
 			} else {
 				state = "Walking to bank";
 				weFish.getToBank().traverse();
-				return 1000;
+				return 1500;
 			}
 		}
 		return 10;

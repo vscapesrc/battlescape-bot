@@ -1,11 +1,8 @@
 package com.bsbot.launcher;
 
-
-
-
-
-
 import java.applet.*;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -23,8 +20,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
+import scripts.AIOFighter;
 import scripts.AIOFisher;
 import scripts.Cooker;
+import scripts.InterfaceExplorer;
 import scripts.Script;
 import scripts.ScriptManifest;
 
@@ -36,6 +35,8 @@ import com.bsbot.wrappers.RSBankItem;
 import com.bsbot.wrappers.RSGroundItem;
 import com.bsbot.wrappers.RSInterface;
 import com.bsbot.wrappers.RSInterfaceChild;
+import com.bsbot.wrappers.RSNPC;
+import com.bsbot.wrappers.RSPlayer;
 import com.bsbot.api.Interfaces;
 
 public class BSLoader extends Applet implements AppletStub, ActionListener {
@@ -51,7 +52,7 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 	static Script runningScript = null;
 	static JButton input = new JButton("User input off");
 	ScriptManager sm = new ScriptManager();
-
+	static PaintJob pj = null;
 	static JMenuBar menuBar = new JMenuBar();
 	static JMenu menu = new JMenu("File");
 	static JMenuItem start = new JMenuItem("Start script");
@@ -70,6 +71,10 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 
 	public static Script getRunningScript() {
 		return runningScript;
+	}
+
+	public static PaintJob getPaintJob() {
+		return pj;
 	}
 
 	public static Methods getMethods() {
@@ -100,6 +105,7 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 		sm.makeDirectories(); // make the bot dirs
 		sm.makeCompilers(); // make the compilers for scripts
 		sm.writeCompilers();
+		pj = new PaintJob();
 	}
 
 	public static void main(String args[]) {
@@ -204,10 +210,11 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 			Thread s = null;
 			if (runningScript == null) {
 				String a = JOptionPane.showInputDialog(null,
-						"What script do you want to run? (fisher, cooker)");
+						"What script do you want to run? (fisher, cooker, aiofighter)");
 				if (a != null) {
 					a = a.toLowerCase();
-					if (a.equals("fisher")) { // these are the scripts that are included
+					if (a.equals("fisher")) { // these are the scripts that are
+												// included
 						runningScript = new AIOFisher();
 						s = new Thread(runningScript, "Script");
 						s.start();
@@ -215,8 +222,18 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 						runningScript = new Cooker();
 						s = new Thread(runningScript, "Script");
 						s.start();
+					} else if(a.equals("interfaceexplorer")){
+						runningScript = new InterfaceExplorer();
+						s = new Thread(runningScript, "Script");
+						s.start();
+					} else if (a.equals("aiofighter")) {
+						runningScript = new AIOFighter();
+						s = new Thread(runningScript, "Script");
+						s.start();
 					} else {
-						Class<Script>[] scriptClasses = sm.getClassesFromFolder(); //load custom scripts from folder
+						Class<Script>[] scriptClasses = sm
+								.getClassesFromFolder(); // load custom scripts
+															// from folder
 						for (Class<Script> sc : scriptClasses) {
 							if (sc.isAnnotationPresent(ScriptManifest.class)) {
 								String scriptName = getClassAnnotationValue(sc,
@@ -267,11 +284,19 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 			case KeyEvent.VK_4:
 				Interfaces i = new Interfaces();
 				for (RSInterface inv : i.getAllParents()) {
-					for (RSInterfaceChild child : inv.getChildren()) {
-						if (child != null && child.getText() != null) {
-							System.out.println(child.getText() + " id: "
-									+ child.getId());
-						}
+					if (inv != null) {
+						System.out.println(inv.getId());
+					}
+				}
+				break;
+
+			case KeyEvent.VK_M:
+				//RSGroundItem item = getMethods().grounditems
+				//		.getNearest("Bones");
+			//	System.out.println(item.getScreenLocation());
+				for(RSPlayer a : getMethods().getAllPlayers()){
+					if(a != null && a.getName() != null){
+						System.out.println(a.getName());
 					}
 				}
 				break;
@@ -279,6 +304,7 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 			case KeyEvent.VK_5:
 				System.out.println(getClient().getGameComponentHook(0)
 						.getMousePosition());
+				System.out.println(getClient().getOpenTab());
 				break;
 
 			case KeyEvent.VK_7:
@@ -318,6 +344,27 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 		public void keyTyped(KeyEvent arg0) {
 			// TODO Auto-generated method stub
 
+		}
+	}
+
+	public class PaintJob {
+		public void paint(Graphics g) {
+			/*
+			 * if(getClient().getGameComponentHook(0) != null &&
+			 * getClient().getGameComponentHook(0).getMousePosition() != null) {
+			 * int x = (int)
+			 * getClient().getGameComponentHook(0).getMousePosition().getX();
+			 * int y = (int)
+			 * getClient().getGameComponentHook(0).getMousePosition().getY();
+			 */
+			if (getLoader() != null && getLoader().mousePos != null) {
+				int x = (int) getLoader().mousePos.getX();
+				int y = (int) getLoader().mousePos.getY();
+				g.setColor(Color.RED);
+				g.translate(8, 2);
+				g.drawLine((x - 8), (y - 8), x + 8, y + 8);
+				g.drawLine((x - 8), (y + 8), x + 8, y - 8);
+			}
 		}
 	}
 }

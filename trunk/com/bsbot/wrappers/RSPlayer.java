@@ -21,6 +21,13 @@ public class RSPlayer extends RSEntity {
 		return pl;
 	}
 	
+	public String getName(){
+		if(pl != null && pl.getPlayerName() != null){
+		return pl.getPlayerName();
+		}
+		return null;
+	}
+	
 	
 	@Override
 	public int getCurrentHealth(){

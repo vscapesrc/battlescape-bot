@@ -152,7 +152,7 @@ public class Calculations {
 	 */
 
 	public static boolean pointOnScreen(Point p) {
-		if(WHOLE_SCREEN.contains(p) && p.getX() > 550){
+		if(WHOLE_SCREEN.contains(p) ){
 		return true;
 		}
 		return false;
