@@ -20,8 +20,9 @@ import com.bsbot.wrappers.RSTile;
 public class Objects {
 
 	Methods methods = null;
+
 	public Objects(Methods m) {
-		this.methods=m;
+		this.methods = m;
 	}
 
 	public static RSObject getNearest(int id) {
@@ -51,8 +52,8 @@ public class Objects {
 
 		return returnGameObject;
 	}
-	
-	public static RSObject getNearestByName(String name){
+
+	public static RSObject getNearestByName(String name) {
 		RSObject returnObj = null;
 		RSObject[] all = getAll();
 		int maxDist = 9000;
@@ -61,8 +62,7 @@ public class Objects {
 		double dist = -1;
 		RSObject cur = null;
 		for (RSObject a : getAll()) {
-			if (a != null
-					&& a.getName() != null)
+			if (a != null && a.getName() != null) {
 				if (a.getName().equalsIgnoreCase(name)) {
 					int x, y;
 
@@ -75,6 +75,7 @@ public class Objects {
 						cur = a;
 					}
 				}
+			}
 		}
 
 		return cur;
@@ -88,7 +89,7 @@ public class Objects {
 				int j = (items).length;
 				for (RSObject gi : items) {
 					if (gi != null) {
-						
+
 						temp.add(gi);
 					}
 				}
@@ -99,33 +100,30 @@ public class Objects {
 		return temp.toArray(new RSObject[temp.size()]);
 	}
 
-
-
-
 	private static RSObject[] getAtLocal(int x, int y) {
 		ArrayList<RSObject> objects = new ArrayList<RSObject>();
 		if (BSLoader.getClient().getWorldController().getGroundArray() == null) {
 			return new RSObject[0];
 		}
 
-		
-			Ground rsGround = BSLoader.getClient().getWorldController().getGroundArray()[0][x][y];
+		Ground rsGround = BSLoader.getClient().getWorldController()
+				.getGroundArray()[0][x][y];
 
-			if (rsGround != null) {
-				RSObject rsObj;
+		if (rsGround != null) {
+			RSObject rsObj;
 
-				
-				x += BSLoader.getClient().getBaseX();
-				y += BSLoader.getClient().getBaseY();
+			x += BSLoader.getClient().getBaseX();
+			y += BSLoader.getClient().getBaseY();
 
-					for(GameObject obj : rsGround.getGround()){
-						if (obj != null && obj instanceof GameObject) {
-							if (obj.getId() != -1) {
-								objects.add(new RSObject(obj.getId(), new RSTile(x, y), obj));
-							}
-						}
+			for (GameObject obj : rsGround.getGround()) {
+				if (obj != null && obj instanceof GameObject) {
+					if (obj.getId() != -1) {
+						objects.add(new RSObject(obj.getId(), new RSTile(x, y),
+								obj));
 					}
 				}
+			}
+		}
 		return (RSObject[]) objects.toArray(new RSObject[objects.size()]);
 	}
 }

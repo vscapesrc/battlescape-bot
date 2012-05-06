@@ -174,7 +174,7 @@ public class AIOFisher extends Script {
 			} else {
 				state = "Walking to bank";
 				weFish.getToBank().traverse();
-				return 1500;
+				return 1000;
 			}
 		}
 		return 10;
