@@ -36,6 +36,7 @@ import com.bsbot.wrappers.RSGroundItem;
 import com.bsbot.wrappers.RSInterface;
 import com.bsbot.wrappers.RSInterfaceChild;
 import com.bsbot.wrappers.RSNPC;
+import com.bsbot.wrappers.RSObject;
 import com.bsbot.wrappers.RSPlayer;
 import com.bsbot.api.Interfaces;
 
@@ -308,6 +309,12 @@ public class BSLoader extends Applet implements AppletStub, ActionListener {
 				break;
 
 			case KeyEvent.VK_7:
+				RSObject[] go = getMethods().objects.getAll();
+				for(RSObject obj : go){
+					if(obj != null){
+						System.out.println(obj.getId() + obj.getName());
+					}
+				}
 				break;
 
 			case KeyEvent.VK_PLUS:
