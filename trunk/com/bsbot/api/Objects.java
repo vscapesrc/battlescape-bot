@@ -14,8 +14,6 @@ import com.bsbot.wrappers.RSNPC;
 import com.bsbot.wrappers.RSObject;
 import com.bsbot.wrappers.RSTile;
 
-// Referenced classes of package net.xotiksys.script.methods:
-//            Players, Calculations
 
 public class Objects {
 
@@ -24,6 +22,12 @@ public class Objects {
 	public Objects(Methods m) {
 		this.methods = m;
 	}
+	
+	/**
+	 * Gets nearest object by id
+	 * @param id Id of the object
+	 * @return The object
+	 */
 
 	public static RSObject getNearest(int id) {
 		RSObject returnGameObject = null;
@@ -52,6 +56,12 @@ public class Objects {
 
 		return returnGameObject;
 	}
+	
+	/**
+	 * Gets nearest object by name
+	 * @param name Name of the object
+	 * @return The object
+	 */
 
 	public static RSObject getNearestByName(String name) {
 		RSObject returnObj = null;

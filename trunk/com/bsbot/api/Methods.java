@@ -38,9 +38,15 @@ public class Methods {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return Whether the player is loggeed in
+	 */
+	
 	public boolean isLoggedIn(){
 		return BSLoader.getClient().isLoggedIn();
 	}
+	
 
 	public static RSPlayer getMyPlayer() {
 		return new RSPlayer(BSLoader.getClient().getMyPlayer());

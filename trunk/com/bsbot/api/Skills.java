@@ -37,9 +37,19 @@ public class Skills {
 	public final int RUNECRAFTING = 20;
 	
 	
+	/**
+	 * Gets a level in specified skill
+	 * @param skillId ID of skill
+	 * @return the level in specified skill
+	 */
 	public int getLevel(int skillId){
 		return BSLoader.getClient().getCurrentStats()[skillId];
 	}
+	/**
+	 * Gets experience in specified skill
+	 * @param skillId ID of skill
+	 * @return the experience in specified skill
+	 */
 	
 	public int getExperience(int skillId){
 		return BSLoader.getClient().getExperience()[skillId];
