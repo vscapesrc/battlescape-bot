@@ -31,6 +31,11 @@ public class TilePath {
 
 			n.clickMouse(p, true);
 	}
+	
+	/**
+	 * Reverses the tilepath
+	 * @return the reversed tilepath
+	 */
 
 
 	public TilePath reverse(){
@@ -54,6 +59,11 @@ public class TilePath {
 		}
 		return null;
 	}
+	
+	/**
+	 * Walks the tilepath
+	 * @return whenever the walking was succesfull
+	 */
 
 	public boolean traverse() {
 		RSTile next = getNext();
