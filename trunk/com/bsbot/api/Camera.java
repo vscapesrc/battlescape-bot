@@ -25,6 +25,7 @@ public class Camera
 	public void turnTo(final RSEntity c) {
 		int angle = getCharacterAngle(c);
 		setCameraRotation(angle);
+		setPitch(false);
 	}
 	
 	private int getCharacterAngle(RSEntity n) {
@@ -154,7 +155,7 @@ public class Camera
         }
     }
 
-    private boolean setCameraAltitude(boolean up)
+    public boolean setPitch(boolean up)
     {
         try
         {

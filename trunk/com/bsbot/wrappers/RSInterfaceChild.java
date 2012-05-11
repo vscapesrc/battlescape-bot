@@ -25,7 +25,7 @@ public class RSInterfaceChild {
 	}
 	
 	public int getScreenX(){
-		return accessor.getX()+getAccessor().getXOffset();
+		return accessor.getXPos()+getAccessor().getXOffset();
 	}
 	
 	public int getScreenY(){
@@ -36,13 +36,14 @@ public class RSInterfaceChild {
 		return accessor;
 	}
 	
+	
 
 	
 	
 	
-	public RSInterface getParent(){
+	public RSInterfaceChild getParent(){
 		
-		return new RSInterface(parent, parentId);
+		return new RSInterfaceChild(parent, parent[accessor.getParentId()], parentId);
 	}
 	
 	public GameInterface getHook(){
@@ -50,7 +51,10 @@ public class RSInterfaceChild {
 	}
 	
 	public int getId(){
+		if(accessor != null){
 		return accessor.getId();
+		}
+		return -1;
 	}
 	
 	public int getAbsoluteX() {
@@ -68,7 +72,17 @@ public class RSInterfaceChild {
 	
 	
 	public Rectangle getArea() {
-		return new Rectangle(accessor.getX(), accessor.getY(), accessor.getWidth(), accessor.getHeight());
+		int x = 0;
+		int y = 0;
+		x+=getParent().getScreenX();
+		y+=getParent().getScreenY();
+		for(GameInterface a : accessor.getChildren()){
+			x += a.getXPos()+a.getYOffset();
+			y += a.getY()+a.getYOffset();
+		}
+		x+=getScreenX();
+		y+=getScreenY();
+		return new Rectangle(x, y, accessor.getWidth(), accessor.getHeight());
 	}
 	
 	public String getText(){

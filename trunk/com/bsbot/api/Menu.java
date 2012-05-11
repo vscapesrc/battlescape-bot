@@ -141,7 +141,6 @@ public class Menu {
 
 	public static boolean atMenuItem(int i, boolean inventory) {
 		if (!isOpen()) {
-			System.out.println("Return fales");
 			return false;
 		}
 		String actions[] = getValidMenuActions();
@@ -154,13 +153,16 @@ public class Menu {
 
 
 			if(inventory){
+
+
 				xOff = 60;
 
 				 yOff = 15 + (20*i)+10;
 			}else{
+
 				xOff = 60;
 
-				 yOff = 15 + (20*i)-10;
+				 yOff = 15 + (20*i);
 			}
 			Mouse m = new Mouse();
 			Point p = new Point(location.x + xOff, location.y + yOff);
@@ -174,20 +176,24 @@ public class Menu {
 	
 	public static boolean atMenuItem(int i) {
 		if (!isOpen()) {
-			System.out.println("Return fales");
 			return false;
 		}
 		String actions[] = getValidMenuActions();
 		try {
 			Point location = getMenuLocation();
-
 			int xOff=0;
 			int yOff=0;
+			if(BSLoader.getMethods().banking.isOpen()){
+
+				xOff = 50;
+
+				yOff = 20 + (20*i);///20*i
+			}else{
 
 			xOff = 50;
 
-			yOff = 20 + (20*i);
-				 
+			yOff = 20 + (15*i);
+			}
 				 
 			Mouse m = new Mouse();
 			Point p = new Point(location.x + xOff, location.y + yOff); 

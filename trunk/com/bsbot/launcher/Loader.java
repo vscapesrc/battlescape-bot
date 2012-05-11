@@ -25,7 +25,7 @@ public class Loader extends Applet
 
     public Loader()
     {
-        _flddo = false;
+        _flddo = true;
         a = 474;
     }
     
@@ -107,14 +107,15 @@ public class Loader extends Applet
         {
             ClassThing b1 = new ClassThing();
          
-           byte abyte0[] = a("https://dl.dropbox.com/s/aixa2dt9wf2puz1/client_V1.3.jar?dl=1", "Starting up bsbot");
+            byte abyte0[] = a("https://dl.dropbox.com/s/k5wp1piy653t7mx/client_v1.4.jar?dl=1", "Loading BSBot");
             if(abyte0 == null)
                 throw new Exception("Client download failed");
             b1.a = new ClientClassLoader(abyte0);
             Class class1 = b1.loadClass("sign.signlink");
             class1.getField("mainapp").set(null, this);
             Class class2 = b1.loadClass("client");
-            _fldfor = (Applet)class2.newInstance();
+            reflectObject = class2.newInstance();
+            _fldfor = (Applet)reflectObject;
             _fldfor.init();
             _fldfor.start();
             BSLoader.setClient((Client)_fldfor);
@@ -290,9 +291,11 @@ public class Loader extends Applet
     public void mouseReleased(MouseEvent mouseevent)
     {
     }
+    
+    public Object reflectObject;
 
     private Applet _fldfor;
-    private boolean _flddo;
+    private boolean _flddo = true;
     private int a;
     private BufferedImage _fldif;
     

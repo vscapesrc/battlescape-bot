@@ -24,6 +24,7 @@ public class Methods {
 	public Interfaces interfaces = new Interfaces(this);
 	public Bank banking = new Bank(this);
 	public Mouse n = new Mouse();
+	public Tabs tabs = new Tabs();
 	public Keyboard keyboard = new Keyboard();
 	public Camera camera = new Camera(this);
 	private RSInterface[] mainCache = new RSInterface[0];
@@ -36,6 +37,17 @@ public class Methods {
 			Thread.sleep(time);
 		} catch (Exception e) {
 		}
+	}
+	
+	public int getMyPlayerIndex(){
+		Player[] array = BSLoader.getClient().getPlayers();
+		for(int i = 0; i < array.length;i++ ){
+			RSPlayer pl = new RSPlayer(array[i]);
+			if(pl.getName() != null && pl.getName().equals(getMyPlayer().getName())){
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	/**
@@ -51,6 +63,7 @@ public class Methods {
 	public static RSPlayer getMyPlayer() {
 		return new RSPlayer(BSLoader.getClient().getMyPlayer());
 	}
+	
 	
 	public RSPlayer[] getAllPlayers(){
 		ArrayList<RSPlayer> all = new ArrayList<RSPlayer>();
@@ -102,6 +115,19 @@ public class Methods {
 			}
 		}
 		return inter;
+	}
+	
+	public RSNPC[] getAllNpcs(){
+		ArrayList<RSNPC> all = new ArrayList<RSNPC>();
+        for (int i = 0; i < BSLoader.getClient().getNpcs().length; i++) {
+            Npc a = BSLoader.getClient().getNpcs()[i];
+            if (a != null && a.getDefinition() != null
+                    && a.getDefinition().getName() != null) {
+                RSNPC th = new RSNPC(a, i);
+                all.add(th);
+            }
+        }
+		return all.toArray(new RSNPC[all.size()]);
 	}
 
 	public RSNPC getNearestNpc(String name) {

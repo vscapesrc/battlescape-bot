@@ -62,6 +62,40 @@ public class Objects {
 	 * @param name Name of the object
 	 * @return The object
 	 */
+	
+	public static RSObject getNearest(String name) {
+		RSObject returnGameObject = null;
+		try{
+
+		int maxDist = 50;
+		for (int x = 0; x < 104; x++) {
+			for (int y = 0; y < 104; y++) {
+				RSObject items[] = getAtLocal(x, y);
+				RSObject agrounditem[];
+				int j = (agrounditem = items).length;
+				for (int i = 0; i < j; i++) {
+					RSObject item = agrounditem[i];
+					if (item.getName().equals(name)
+							&& Calculations.distanceBetween(Methods
+									.getMyPlayer().getLocation(), item
+									.getLocation()) < (double) maxDist) {
+						maxDist = (int) Calculations.distanceBetween(Methods
+								.getMyPlayer().getLocation(), item
+								.getLocation());
+						returnGameObject = item;
+					}
+				}
+
+			}
+
+		}
+
+
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+		return returnGameObject;
+	}
 
 	public static RSObject getNearestByName(String name) {
 		RSObject returnObj = null;
@@ -96,7 +130,6 @@ public class Objects {
 		for (int x = 0; x < 104; x++) {
 			for (int y = 0; y < 104; y++) {
 				RSObject items[] = getAtLocal(x, y);
-				int j = (items).length;
 				for (RSObject gi : items) {
 					if (gi != null) {
 

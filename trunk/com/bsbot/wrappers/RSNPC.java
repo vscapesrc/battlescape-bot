@@ -11,6 +11,10 @@ public class RSNPC extends RSEntity {
 	private Npc lol;
 	private int id;
 	
+	public Npc getHook(){
+		return lol;
+	}
+	
 	public RSNPC(Npc a, int id){
 		this.lol = a;
 		this.id = id;

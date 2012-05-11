@@ -24,6 +24,14 @@ public class TilePath {
 			tiles[i] = theTiles[i];
 		}
 	}
+	
+	public RSTile getFirst(){
+		return tiles[0];
+	}
+	
+	public RSTile getLast(){
+		return tiles[tiles.length-1];
+	}
 
 	public void walkTileMM(RSTile t) {
 		Point p = Calculations.worldToMinimap(t);

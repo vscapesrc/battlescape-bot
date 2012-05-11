@@ -12,6 +12,11 @@ public interface Client extends RSApplet{
 	public int getBaseY();
 	public Player getMyPlayer();
 	
+	public int getPlayerId();
+	
+	public int getTime();
+	
+	
 	public int[] getMaxStats();
 	public int[] getCurrentStats();
 	public int[] getExperience();

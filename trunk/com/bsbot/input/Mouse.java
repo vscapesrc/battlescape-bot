@@ -78,7 +78,7 @@ public class Mouse
                     int secs = 0;
                     double nanos = 0.050000000000000003D - (double)secs;
                     int nanosReal = (int)(nanos * 1000D);
-                    Thread.sleep(1, 40); //secs, nanosReal
+                    Thread.sleep(1, 10); //secs, nanosReal
                 }
                 catch(InterruptedException interruptedexception) { }
         }
@@ -229,7 +229,7 @@ public class Mouse
                 int secs = 0;
                 double nanos = 0.050000000000000003D - (double)secs;
                 int nanosReal = (int)(nanos * 1000D);
-                Thread.sleep(secs, nanosReal);
+                Thread.sleep(1, 10); //secs, nanosReal
             }
             catch(InterruptedException e)
             {

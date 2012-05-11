@@ -10,4 +10,5 @@ public interface Entity {
 	public int getAnimation();
 	public int getX();
 	public int getY();
+	public int getLoopCycle();
 }

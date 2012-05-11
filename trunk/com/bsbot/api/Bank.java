@@ -26,8 +26,70 @@ public class Bank {
 		if (isOpen()) {
 			if (methods.inventory.getCount() > 0) {
 				RSItem[] items = methods.inventory.getItems();
-				items[0].interact("Store all");
-				depositAll();
+				for(RSItem i : items){
+					if(i.getId() > 1){
+						i.interactBank("Store all");
+						try{
+						Thread.sleep(300);
+						}catch(Exception e){
+							
+						}
+						depositAll();
+						return;
+					}
+				}
+
+
+			}
+		}
+	}
+	
+	public void withdraw(final String name, final int count) {
+		if (isOpen()) {
+			if (count < 0) {
+				throw new IllegalArgumentException("count (" + count + ") < 0");
+			}
+			int invCountStart = methods.inventory.getCount();
+			RSBankItem rsi = getItem(name);
+			if (rsi == null) {
+				return;
+			}
+
+			// Check tab
+
+			switch (count) {
+				case 0:
+					rsi.interact("Withdraw All");
+					methods.sleep(1300);
+					break;
+				case 1:
+					rsi.interact("Withdraw 1");
+					methods.sleep(1300);
+					break;
+				case 5:
+					rsi.interact("Withdraw 5");
+
+					methods.sleep(1300);
+					break;
+				case 10:
+					rsi.interact("Withdraw 10");
+					methods.sleep(1300);
+					break;
+				default:
+						rsi.interact("Withdraw X");
+						methods.sleep(1300);
+							try{
+							methods.keyboard.sendKeys(String.valueOf(count));
+						}catch(Exception e){
+							
+						}
+					}
+
+			
+			int newInvCount = methods.inventory.getCount();
+			if(newInvCount <= invCountStart){
+				withdraw(name, count);
+				return;
 			}
 		}
 	}
@@ -134,7 +196,8 @@ public class Bank {
 	 */
 	
 	public boolean isOpen() {
-		return methods.interfaces.isInterfaceOpen(114);
+		return BSLoader.getClient().getInterfaceCache()[114] != null;
+		///return methods.interfaces.isParentInterfaceOpen(114);
 	}
 	
 	/**
@@ -147,7 +210,6 @@ public class Bank {
 		name = name.toLowerCase();
 		for (RSBankItem item : getBankItems()) {
 			if (item.getName().toLowerCase().equals(name)) {
-				System.out.println(item.getName() + " " + name);
 				return item;
 			}
 		}

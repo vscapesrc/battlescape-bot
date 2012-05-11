@@ -39,7 +39,7 @@ public class RSBankItem {
 	}
 	
 	public Point getScreenLocation(){
-		return new Point(getScreenX() + r.nextInt(8), getScreenY()+r.nextInt(8));
+		return new Point(getScreenX() + r.nextInt(8), getScreenY());
 	}
 	
 	public int getId(){
@@ -87,7 +87,7 @@ public class RSBankItem {
 		int col = theSlot-- % 8;
 		int row = theSlot / 8;
 		int x = 73 + col * 49;
-		int y = 63 + (row * 39) + r.nextInt(6);
+		int y = 63 + (row * 39);
 
 		return new Point(x+10, y);
 	}
