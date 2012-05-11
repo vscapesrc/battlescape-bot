@@ -41,6 +41,10 @@ public abstract class Script extends Methods implements Runnable {
 		running = true ? running == false : running == true;
 		System.out.println(running);
 	}
+	
+	public void setRunning(boolean a) {
+		running = a;
+	}
 
 	@Override
 	public void run() {
@@ -53,7 +57,7 @@ public abstract class Script extends Methods implements Runnable {
 				///Thread s = new Thread(randoms[0], "NumberRandom");
 				////s.start();
 				randoms[1] = new LevelUp();
-				randoms[2] = new AntiMod();
+				//randoms[2] = new AntiMod();
 				//randoms[2] = new AntiMod();
 			///	Thread l = new Thread(randoms[1], "LevelUp");
 			/////	l.start();
@@ -63,7 +67,7 @@ public abstract class Script extends Methods implements Runnable {
 						try {
 							if (!paused) {
 								for(Random r : randoms){
-									if(r.startUp()){
+									if(r != null && r.startUp()){
 										sleep = r.loop();
 										Thread.sleep(sleep);
 									}

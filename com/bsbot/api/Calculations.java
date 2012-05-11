@@ -35,7 +35,7 @@ public class Calculations {
 	 */
 
 	public static boolean tileOnMap(RSTile t) {
-		return distanceTo(t) < 15;
+		return distanceTo(t) < 18;
 	}
 	
 	/**
@@ -191,7 +191,7 @@ public class Calculations {
             int i3 = y * i1 - x * n >> 16;
             int i4 = 107 + i2 + 3;
             int i5 = 88 - i3 - 5;
-            return new Point(i4 + 516, i5);
+            return new Point(i4 + 515, i5);
         }
     }
     

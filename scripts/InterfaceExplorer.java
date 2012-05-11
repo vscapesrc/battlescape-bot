@@ -323,6 +323,8 @@ public class InterfaceExplorer extends Script {
 			g.setColor(Color.ORANGE);
 			g.drawRect(highlightArea.x, highlightArea.y, highlightArea.width,
 					highlightArea.height);
+			g.drawString("X:" + highlightArea.x + " y: "+ highlightArea.y, 10, 10);
+			g.drawString("Width: " + highlightArea.height + " width : " + highlightArea.width, 10, 30);
 		}
 
 	}

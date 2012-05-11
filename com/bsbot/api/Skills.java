@@ -45,6 +45,7 @@ public class Skills {
 	public int getLevel(int skillId){
 		return BSLoader.getClient().getCurrentStats()[skillId];
 	}
+
 	/**
 	 * Gets experience in specified skill
 	 * @param skillId ID of skill

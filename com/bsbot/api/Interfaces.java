@@ -1,3 +1,4 @@
+
 package com.bsbot.api;
 
 import java.util.ArrayList;
@@ -62,10 +63,30 @@ public class Interfaces {
 	 * @return whether the interface with the given id is open
 	 */
 	
+	public boolean isParentInterfaceOpen(int id){
+		RSInterface[] cache = getAllParents();
+		for(RSInterface loop : cache){
+			if(loop.getId() == id){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isOpen(int parent, int child){
+		return BSLoader.getClient().getInterfaceCache()[parent][child] != null;
+	}
+	
 	public boolean isInterfaceOpen(int id){
 		RSInterface[] cache = getAllParents();
 		for(RSInterface loop : cache){
-			if( loop !=null && loop.getId() == id){
+			for(RSInterfaceChild loop2 : loop.getChildren()){
+				if(loop2 != null && loop2.getId() != -1 && loop2.getId() == id){
+
+					return true;
+				}
+			}
+			if(loop !=null && loop.getId() == id){
 				return true;
 			}
 		}

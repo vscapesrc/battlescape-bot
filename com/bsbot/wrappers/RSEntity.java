@@ -14,6 +14,14 @@ public abstract class RSEntity {
 	Mouse m = new Mouse();
 
 	protected abstract com.bsbot.hooks.Entity getAccessor();
+	
+	public boolean isInCombat(){
+		return BSLoader.getClient().getTime() < getAccessor().getLoopCycle();
+	}
+	
+	public int getLoopCycle(){
+		return getAccessor().getLoopCycle();
+	}
 
 	public RSEntity getInteracting() {
 		int interact = getAccessor().getInteracting();
@@ -23,8 +31,11 @@ public abstract class RSEntity {
 		if (interact < 32768) {
 			return new RSNPC(interact);
 		} else {
-			interact = -32768;
-			return null;
+			interact -= 32768;
+			if(interact == BSLoader.getClient().getPlayerId()){
+				return BSLoader.getMethods().getMyPlayer();
+			}
+			return new RSPlayer(BSLoader.getClient().getPlayers()[interact]);
 		}
 	}
 
@@ -61,7 +72,6 @@ public abstract class RSEntity {
 			action = action.toLowerCase();
 			if (actions[0] != null && actions[0].contains(action)) {
 				try {
-					System.out.println(actions[0]);
 					m.moveMouse(p);
 					Thread.sleep(30);
 					m.clickMouse(p, true);
@@ -83,7 +93,7 @@ public abstract class RSEntity {
 	}
 
 	public Point getScreenLocation() {
-		return Calculations.worldToScreen(getAccessor().getX(), getAccessor()
+		return Calculations.worldToScreen(getAccessor().getX()-5, getAccessor()
 				.getY(), getAccessor().getHeight() / 2);
 	}
 
@@ -94,6 +104,8 @@ public abstract class RSEntity {
 	public int getHeight() {
 		return getAccessor().getHeight();
 	}
+	
+
 
 	public RSTile getLocation() {
 		Entity c = getAccessor();

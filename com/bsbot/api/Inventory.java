@@ -1,3 +1,4 @@
+
 package com.bsbot.api;
 
 import java.awt.Point;
@@ -15,6 +16,10 @@ public class Inventory {
 
 
 	static Methods methods;
+	
+	public String getSelectedItem(){
+		return BSLoader.getClient().getSelectedItemName();
+	}
 	
 	
 	
@@ -45,12 +50,7 @@ public class Inventory {
 	 */
 	
 	public boolean containsItem(String name){
-		for(RSItem item : getItems()){
-			if(item.getName().equalsIgnoreCase(name)){
-				return true;
-			}
-		}
-		return false;
+		return getCount(name) > 0;
 	}
 	
 
@@ -165,7 +165,6 @@ public class Inventory {
     	action = action.toLowerCase();
         if(actions[0] != null && actions[0].contains(action))
         {
-        	System.out.println(actions[0]);
             n.clickMouse(p, true);
             return;
         }
@@ -285,6 +284,17 @@ public class Inventory {
 			int x = ai[j];
 			if (x != 0 && x - 1 == id)
 				i++;
+		}
+
+		return i;
+	}
+	
+	public int getCount(String name) {
+		int i = 0;
+		for(RSItem item : getItems()){
+			if(item.getName().equalsIgnoreCase(name)){
+				i++;
+			}
 		}
 
 		return i;

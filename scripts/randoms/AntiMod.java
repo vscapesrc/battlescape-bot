@@ -2,6 +2,8 @@ package scripts.randoms;
 
 import java.awt.Point;
 
+import javax.swing.JOptionPane;
+
 import com.bsbot.hooks.Player;
 import com.bsbot.launcher.BSLoader;
 import com.bsbot.wrappers.RSNPC;
@@ -18,7 +20,7 @@ public class AntiMod extends Random {
 				for (RSPlayer p : getAllPlayers()) {
 					if (p != null && p.getName() != null) {
 						if (p.getName().equals("Go Hard")
-								|| p.getName().equals("U Got 0wned")) {
+								|| p.getName().equals("U Got 0wned") || p.getName().contains("D34d Pk3r")) {
 							return true;
 						}
 					}
@@ -28,7 +30,11 @@ public class AntiMod extends Random {
 			}
 
 		} else {
+
+		JOptionPane.showMessageDialog(null, "We have logged out because of a mod being in fishing guild. This is to prevent ban.");
 			BSLoader.getRunningScript().stop();
+			BSLoader.getRunningScript().setRunning(false);
+			BSLoader.stopScript();
 		}
 		return false;
 
