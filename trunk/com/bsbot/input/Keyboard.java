@@ -1,11 +1,13 @@
 package com.bsbot.input;
 
+import com.bsbot.api.Methods;
+import com.bsbot.hooks.Client;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Random;
 
-import com.bsbot.launcher.BSLoader;
 /**
  * Sends completly legit key events to a the Component returned by ac.getKeyListener().
  * This class emulates a standard US keyboard.
@@ -30,31 +32,39 @@ import com.bsbot.launcher.BSLoader;
  */
 public class Keyboard {
 
-   /* private AccessorMethods ac;
+    /* private AccessorMethods ac;
 
-    /**
-     * Sole constructor.
-     * @param ac AccessorMethods class.
-     */
-    public Keyboard() {
+   /**
+    * Sole constructor.
+    * @param ac AccessorMethods class.
+    */
+    Methods methods;
+
+    public Client getHook() {
+        return methods.getHook();
+    }
+
+    public Keyboard(Methods m) {
+        this.methods = m;
     }
 
     /**
      * This can be called from scripts and sends a String to the applet.
+     *
      * @param s The string to send.
      */
     public void sendKeys(String s) {
-      /////  FocusManager.readyForInput(ac.getFocusListener());
-        Component target = BSLoader.getClient().getGameComponentHook(0);
+        /////  FocusManager.readyForInput(ac.getFocusListener());
+        Component target = getHook().getGameComponentHook(0);
         pressTime = System.currentTimeMillis();
         for (char c : s.toCharArray())
-            for (KeyEvent ke : createKeyClick(target, c)){
-            	try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+            for (KeyEvent ke : createKeyClick(target, c)) {
+                try {
+                    Thread.sleep(5);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
                 target.dispatchEvent(ke);
             }
         clickKey(10); /// press enter
@@ -62,11 +72,12 @@ public class Keyboard {
 
     /**
      * This can be called from scripts and sends a character to the applet.
+     *
      * @param c The character to send.
      */
     public void clickKey(char c) {
-       ////// FocusManager.readyForInput(ac.getFocusListener());
-    	Component target = BSLoader.getClient().getGameComponentHook(0);
+        ////// FocusManager.readyForInput(ac.getFocusListener());
+        Component target = getHook().getGameComponentHook(0);
         pressTime = System.currentTimeMillis();
         for (KeyEvent ke : createKeyClick(target, c))
             target.dispatchEvent(ke);
@@ -74,11 +85,12 @@ public class Keyboard {
 
     /**
      * This can be called from scripts and sends a key to the applet.
+     *
      * @param keyCode The key code to send.
      */
     public void clickKey(int keyCode) {
-      ////  FocusManager.readyForInput(ac.getFocusListener());
-    	Component target = BSLoader.getClient().getGameComponentHook(0);
+        ////  FocusManager.readyForInput(ac.getFocusListener());
+        Component target = getHook().getGameComponentHook(0);
         pressTime = System.currentTimeMillis();
         for (KeyEvent ke : createKeyClick(target, keyCode))
             target.dispatchEvent(ke);
@@ -90,11 +102,11 @@ public class Keyboard {
      * @param keyCode the key code to send
      */
     public void pressKey(int keyCode) {
-	//FocusManager.readyForInput(ac.getFocusListener());
-    Component target = BSLoader.getClient().getGameComponentHook(0);
-	pressTime = System.currentTimeMillis();
-	KeyEvent ke = createKeyPress(target, keyCode);
-	target.dispatchEvent(ke);
+        //FocusManager.readyForInput(ac.getFocusListener());
+        Component target = getHook().getGameComponentHook(0);
+        pressTime = System.currentTimeMillis();
+        KeyEvent ke = createKeyPress(target, keyCode);
+        target.dispatchEvent(ke);
     }
 
     /**
@@ -103,11 +115,11 @@ public class Keyboard {
      * @param keyCode the key code to send
      */
     public void releaseKey(int keyCode) {
-	///FocusManager.readyForInput(ac.getFocusListener());
-    Component target = BSLoader.getClient().getGameComponentHook(0);
-	pressTime = System.currentTimeMillis();
-	KeyEvent ke = createKeyRelease(target, keyCode);
-	target.dispatchEvent(ke);
+        ///FocusManager.readyForInput(ac.getFocusListener());
+        Component target = getHook().getGameComponentHook(0);
+        pressTime = System.currentTimeMillis();
+        KeyEvent ke = createKeyRelease(target, keyCode);
+        target.dispatchEvent(ke);
     }
 
     /* Internal Event construction  */
@@ -126,6 +138,7 @@ public class Keyboard {
     /**
      * Gets a random number.
      * todo: need some testing to determine a legitimate lagtime
+     *
      * @return Random number used in bewtween keystrokes and also presses.
      */
     private static long getRandom() {
@@ -136,13 +149,14 @@ public class Keyboard {
     /**
      * Generates events for pressing a key that sends a character, also takes care of the needed masks and
      * changes whatever is needed for special characters so that the events are legitimate.
+     *
      * @param target Component the events are being sent to.
-     * @param c The character to send.
+     * @param c      The character to send.
      * @return A KeyEvent array for you to dispatch to the component.
      */
     private static KeyEvent[] createKeyClick(Component target, char c) {
         //takes about 2x as long to get to another key than to release a key?
-        pressTime += 2*getRandom();
+        pressTime += 2 * getRandom();
 
         Character newChar = specialChars.get(c);
         int keyCode = (int) Character.toUpperCase((newChar == null) ? c : newChar);
@@ -171,7 +185,8 @@ public class Keyboard {
 
     /**
      * Generates events for pressing a key that doesn't send a character, also takes care of the needed masks.
-     * @param target Component the events are being sent to.
+     *
+     * @param target  Component the events are being sent to.
      * @param keyCode The keycode to send.
      * @return A KeyEvent array for you to dispatch to the component.
      */
@@ -208,7 +223,7 @@ public class Keyboard {
                 break;
         }
         KeyEvent pressed = new KeyEvent(target, KeyEvent.KEY_PRESSED, pressTime, modifier, keyCode, KeyEvent.CHAR_UNDEFINED);
-        
+
         return pressed;
     }
 

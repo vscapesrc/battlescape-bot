@@ -1,22 +1,5 @@
 package scripts;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
 import com.bsbot.api.Calculations;
 import com.bsbot.api.Objects;
 import com.bsbot.api.TilePath;
@@ -24,10 +7,16 @@ import com.bsbot.wrappers.RSBankItem;
 import com.bsbot.wrappers.RSItem;
 import com.bsbot.wrappers.RSObject;
 import com.bsbot.wrappers.RSTile;
+import scripts.Script;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Cooker extends Script {
 
-	TilePath toCook = new TilePath(new RSTile(2586, 3419),new RSTile(2595, 3413), new RSTile(2599, 3406), new RSTile(2607,
+	TilePath toCook = createTilePath(new RSTile(2586, 3419),new RSTile(2595, 3413), new RSTile(2599, 3406), new RSTile(2607,
 			3401), new RSTile(2615, 3397));
 
 	boolean guiOn;
@@ -90,9 +79,9 @@ public class Cooker extends Script {
 			return States.STATE_STOP;
 		}
 		if (!inventory.containsItem(ourFood.getName())) {
-			RSObject bank = Objects.getNearest(2213);
+			RSObject bank = objects.getNearest(2213);
 			if (bank != null
-					&& Calculations.distanceTo(bank.getLocation()) < 10) {
+					&& calc.distanceTo(bank.getLocation()) < 10) {
 				if (bank.isOnScreen()) {
 					if (!banking.isOpen()) {
 						return States.STATE_OPEN_BANK;
@@ -106,9 +95,9 @@ public class Cooker extends Script {
 				return States.STATE_WALK_TO_BANK;
 			}
 		} else {
-			RSObject shove = Objects.getNearestByName("Range");
+			RSObject shove = objects.getNearestByName("Range");
 			if (shove != null
-					&& Calculations.distanceTo(shove.getLocation()) < 10) {
+					&& calc.distanceTo(shove.getLocation()) < 10) {
 				if (shove.isOnScreen()) {
 					if (getMyPlayer().getAnimation() == -1) {
 						return States.STATE_COOK;
@@ -160,8 +149,8 @@ public class Cooker extends Script {
 
 	@Override
 	public int loop() {
-		RSObject bank = Objects.getNearest(2213);
-		RSObject shove = Objects.getNearestByName("Range");
+		RSObject bank = objects.getNearest(2213);
+		RSObject shove = objects.getNearestByName("Range");
 		switch (getState()) {
 		case STATE_STOP:
 			stop();

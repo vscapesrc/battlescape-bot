@@ -1,17 +1,26 @@
 package scripts;
 
-import java.awt.Graphics;
-
+import com.bsbot.api.Methods;
+import com.bsbot.launcher.Loader;
 import scripts.randoms.AntiMod;
 import scripts.randoms.LevelUp;
 import scripts.randoms.NumberRandom;
 import scripts.randoms.Random;
 
-import com.bsbot.api.Methods;
-import com.bsbot.launcher.BSLoader;
+import java.awt.*;
 
 public abstract class Script extends Methods implements Runnable {
 
+
+	
+	
+	public void setLoader(Loader l){
+		super.setLoader(l);
+	}
+
+    public boolean isRunning(){
+        return running;
+    }
 
 
 	public abstract void paint(Graphics g);
@@ -48,19 +57,21 @@ public abstract class Script extends Methods implements Runnable {
 
 	@Override
 	public void run() {
-		if (isLoggedIn()) {
 			running = true;
 			int sleep;
 			try {
 				onBegin();
 				randoms[0] = new NumberRandom();
 				///Thread s = new Thread(randoms[0], "NumberRandom");
-				////s.start();
-				randoms[1] = new LevelUp();
+				randoms[0].setScript(this);
+                //randoms[1] = new LevelUp();
+               // randoms[1].setScript(this);
+				//randoms[1] = new LevelUp();
+			//	randoms[1].setScript(this);
 				//randoms[2] = new AntiMod();
 				//randoms[2] = new AntiMod();
-			///	Thread l = new Thread(randoms[1], "LevelUp");
-			/////	l.start();
+				//Thread l = new Thread(randoms[1], "LevelUp");
+			//	l.start();
 
 				try {
 					while (running) {
@@ -97,9 +108,6 @@ public abstract class Script extends Methods implements Runnable {
 				}
 			} catch (Exception e) {
 			}
-		} else {
-			System.out
-					.println("Please start script AFTER login screen and AFTER lobby");
 		}
 	}
-}
+

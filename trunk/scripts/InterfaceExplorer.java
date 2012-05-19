@@ -1,25 +1,9 @@
 package scripts;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.bsbot.wrappers.RSInterface;
+import com.bsbot.wrappers.RSInterfaceChild;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.event.TreeSelectionEvent;
@@ -27,13 +11,15 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
-
-import com.bsbot.wrappers.RSInterface;
-import com.bsbot.wrappers.RSInterfaceChild;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @ScriptManifest(authors = { "joku.rules" }, name = "Interface Explorer", version = 0.3, description = "Fetches various interface data for developers.")
 public class InterfaceExplorer extends Script {
-
+	public RSInterfaceChildWrap uhmaIk = null;
 	private class InterfaceTreeModel implements TreeModel {
 		private final Object root = new Object();
 		private final ArrayList<TreeModelListener> treeModelListeners = new ArrayList<TreeModelListener>();
@@ -237,6 +223,7 @@ public class InterfaceExplorer extends Script {
 					infoArea.removeAll();
 					RSInterfaceChild iface = null;
 					if (node instanceof RSInterfaceChildWrap) {
+						uhmaIk = (RSInterfaceChildWrap) node;
 						highlightArea = ((RSInterfaceChildWrap) node).wrapped
 								.getArea();
 						iface = ((RSInterfaceChildWrap) node).wrapped;
@@ -323,7 +310,7 @@ public class InterfaceExplorer extends Script {
 			g.setColor(Color.ORANGE);
 			g.drawRect(highlightArea.x, highlightArea.y, highlightArea.width,
 					highlightArea.height);
-			g.drawString("X:" + highlightArea.x + " y: "+ highlightArea.y, 10, 10);
+			g.drawString(uhmaIk.wrapped.getAccessor().getMasterX() + " " + uhmaIk.wrapped.getAccessor().getMasterY(), 10, 10);
 			g.drawString("Width: " + highlightArea.height + " width : " + highlightArea.width, 10, 30);
 		}
 

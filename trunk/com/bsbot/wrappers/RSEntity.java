@@ -1,137 +1,142 @@
 package com.bsbot.wrappers;
 
-import java.awt.Point;
-
-import com.bsbot.api.Calculations;
-import com.bsbot.api.Menu;
+import com.bsbot.api.Methods;
 import com.bsbot.hooks.Client;
 import com.bsbot.hooks.Entity;
 import com.bsbot.input.Mouse;
-import com.bsbot.launcher.BSLoader;
+
+import java.awt.*;
 
 public abstract class RSEntity {
 
-	Mouse m = new Mouse();
 
-	protected abstract com.bsbot.hooks.Entity getAccessor();
-	
-	public boolean isInCombat(){
-		return BSLoader.getClient().getTime() < getAccessor().getLoopCycle();
-	}
-	
-	public int getLoopCycle(){
-		return getAccessor().getLoopCycle();
-	}
+    protected abstract com.bsbot.hooks.Entity getAccessor();
 
-	public RSEntity getInteracting() {
-		int interact = getAccessor().getInteracting();
-		if (interact == -1) {
-			return null;
-		}
-		if (interact < 32768) {
-			return new RSNPC(interact);
-		} else {
-			interact -= 32768;
-			if(interact == BSLoader.getClient().getPlayerId()){
-				return BSLoader.getMethods().getMyPlayer();
-			}
-			return new RSPlayer(BSLoader.getClient().getPlayers()[interact]);
-		}
-	}
+    protected abstract Methods getMethods();
 
-	public int getCurrentHealth() {
-		return getAccessor().getCurrentHealth();
-	}
+    public Mouse mouse() {
+        return getMethods().mouse;
+    }
 
-	public int getMaxHealth() {
-		return getAccessor().getMaxHealth();
-	}
+    public void setMouse(Mouse mouse) {
+    }
 
-	public boolean isOnScreen() {
-		return Calculations.pointOnGameScreen(getScreenLocation());
-	}
+    public boolean isInCombat() {
+        return getMethods().getHook().getTime() < getAccessor().getLoopCycle();
+    }
 
-	public void interact(String action) {
-		Point p = getScreenLocation();
-		if (Calculations.pointOnGameScreen(p)) {
-			if (Menu.isOpen()) {
-				m.moveMouse(1, 1);
-			}
+    public int getLoopCycle() {
+        return getAccessor().getLoopCycle();
+    }
 
-			m.moveMouse(p);
-			try{
-				Thread.sleep(60);
-			}catch(Exception e){
-				
-			}
-			String actions[] = Menu.getValidMenuActions();
+    public RSEntity getInteracting() {
+        int interact = getAccessor().getInteracting();
+        if (interact == -1) {
+            return null;
+        }
+        if (interact < 32768) {
+            return new RSNPC(interact);
+        } else {
+            interact -= 32768;
+            if (interact == getMethods().getHook().getPlayerId()) {
+                return getMethods().getMyPlayer();
+            }
+            return new RSPlayer(getMethods().getHook().getPlayers()[interact], getMethods());
+        }
+    }
 
-			for (int i = 0; i < actions.length; i++) {
-				actions[i] = actions[i].toLowerCase();
-			}
-			action = action.toLowerCase();
-			if (actions[0] != null && actions[0].contains(action)) {
-				try {
-					m.moveMouse(p);
-					Thread.sleep(30);
-					m.clickMouse(p, true);
-					Thread.sleep(30);
-					return;
-				} catch (Exception e) {
+    public int getCurrentHealth() {
+        return getAccessor().getCurrentHealth();
+    }
 
-				}
-			}
-			m.moveMouse(p);
-			m.clickMouse(p, false);
-			BSLoader.getMethods().sleep(300);
-			Menu.interact(action);
-		} else {
-			Point mm = Calculations.tileToMinimap(getLocation());
-			if (mm.x != -1 && mm.y != -1)
-				m.clickMouse(Calculations.tileToMinimap(getLocation()), true);
-		}
-	}
+    public int getMaxHealth() {
+        return getAccessor().getMaxHealth();
+    }
 
-	public Point getScreenLocation() {
-		return Calculations.worldToScreen(getAccessor().getX()-5, getAccessor()
-				.getY(), getAccessor().getHeight() / 2);
-	}
+    public boolean isOnScreen() {
+        return getMethods().calc.pointOnGameScreen(getScreenLocation());
+    }
 
-	public String getName() {
-		return "-1";
-	}
+    public void interact(String action) {
+        Point p = getScreenLocation();
+        if (isOnScreen()) {
+            if (getMethods().menu.isOpen()) {
+                getMethods().mouse.moveMouse(1, 1);
+            }
 
-	public int getHeight() {
-		return getAccessor().getHeight();
-	}
-	
+            mouse().moveMouse(getScreenLocation());
+            try {
+                Thread.sleep(60);
+            } catch (Exception e) {
+
+            }
+            String actions[] = getMethods().menu.getValidMenuActions();
+
+            for (int i = 0; i < actions.length; i++) {
+                actions[i] = actions[i].toLowerCase();
+            }
+            action = action.toLowerCase();
+            if (actions[0] != null && actions[0].contains(action)) {
+                try {
+                    mouse().moveMouse(p);
+                    Thread.sleep(30);
+                    mouse().clickMouse(p, true);
+                    Thread.sleep(30);
+                    return;
+                } catch (Exception e) {
+
+                }
+            }
+            mouse().moveMouse(p);
+            mouse().clickMouse(p, false);
+            getMethods().sleep(300);
+            getMethods().menu.interact(action);
+        } else {
+            Point mm = getMethods().calc.tileToMinimap(getLocation());
+            if (mm.x != -1 && mm.y != -1)
+                mouse().clickMouse(getMethods().calc.tileToMinimap(getLocation()), true);
+        }
+    }
+
+    public Point getScreenLocation() {
+        return getMethods().calc.worldToScreen(getAccessor().getX() - 5, getAccessor()
+                .getY(), getAccessor().getHeight() / 2);
+    }
+
+    public String getName() {
+        return "-1";
+    }
+
+    public int getHeight() {
+        return getAccessor().getHeight();
+    }
 
 
-	public RSTile getLocation() {
-		Entity c = getAccessor();
-		if (c == null) {
-			return new RSTile(-1, -1);
-		}
-		int x = BSLoader.getClient().getBaseX() + (c.getX() >> 7);
-		int y = BSLoader.getClient().getBaseY() + (c.getY() >> 7);
-		Client cl = BSLoader.getClient();
-		return new RSTile(x, y);
-		// alternative:
-		// return new RSTile(getAccessor().getSmallX()[0] +
-		// BSLoader.getClient().getBaseX(), getAccessor().getSmallY()[0] +
-		// BSLoader.getClient().getBaseY());
-	}
+    public RSTile getLocation() {
+        Entity c = getAccessor();
+        if (c == null) {
+            return new RSTile(-1, -1);
+        }
+        int x = getMethods().getHook().getBaseX() + (c.getX() >> 7);
+        int y = getMethods().getHook().getBaseY() + (c.getY() >> 7);
+        Client cl = getMethods().getHook();
+        return new RSTile(x, y);
+        // alternative:
+        // return new RSTile(getAccessor().getSmallX()[0] +
+        // getMethods().getHook().getBaseX(), getAccessor().getSmallY()[0] +
+        // getMethods().getHook().getBaseY());
+    }
 
-	public int getX() {
-		return getAccessor().getX();
-	}
+    public int getX() {
+        return getAccessor().getX();
+    }
 
-	public int getAnimation() {
-		return getAccessor().getAnimation();
-	}
+    public int getAnimation() {
+        return getAccessor().getAnimation();
+    }
 
-	public int getY() {
-		return getAccessor().getY();
-	}
+    public int getY() {
+        return getAccessor().getY();
+    }
 
 }
