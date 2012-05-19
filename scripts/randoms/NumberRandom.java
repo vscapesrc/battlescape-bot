@@ -1,18 +1,13 @@
 package scripts.randoms;
 
-import java.awt.Graphics;
-
 import com.bsbot.hooks.GameInterface;
-import com.bsbot.input.Keyboard;
 import com.bsbot.wrappers.RSInterface;
-
-import scripts.Script;
 
 public class NumberRandom extends Random {
 
 	@Override
 	public int loop() {
-		RSInterface[] parents = interfaces.getAllParents();
+		RSInterface[] parents = script.interfaces.getAllParents();
 		for (RSInterface parent : parents) {
 			if (parent != null) {
 				for (GameInterface child : parent.getParentInterface()) {
@@ -35,8 +30,7 @@ public class NumberRandom extends Random {
 							}
 							String text2 = subString[1];
 							// send it
-							Keyboard k = new Keyboard();
-							k.sendKeys(text2);
+							script.keyboard.sendKeys(text2);
 						}
 					}
 				}
@@ -47,7 +41,8 @@ public class NumberRandom extends Random {
 
 	@Override
 	public boolean startUp() {
-		RSInterface[] parents = interfaces.getAllParents();
+        System.out.println("random startup");
+		RSInterface[] parents = script.interfaces.getAllParents();
 		for (RSInterface parent : parents) {
 			if (parent != null) {
 				for (GameInterface child : parent.getParentInterface()) {

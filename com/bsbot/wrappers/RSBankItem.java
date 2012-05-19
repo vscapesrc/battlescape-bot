@@ -1,95 +1,96 @@
 package com.bsbot.wrappers;
 
-import java.awt.Point;
+import com.bsbot.api.Methods;
+import com.bsbot.hooks.Client;
+import com.bsbot.hooks.ItemDef;
+
+import java.awt.*;
 import java.util.Random;
 
-import com.bsbot.api.Inventory;
-import com.bsbot.api.Menu;
-import com.bsbot.hooks.ItemDef;
-import com.bsbot.input.Mouse;
-import com.bsbot.launcher.BSLoader;
-
 public class RSBankItem {
-	int id;
-	int slot;
-	private ItemDef itemDef;
-	public RSInterfaceChild child;
-	Random r = new Random();
-	
-	
-	public RSBankItem(int id, int slot, RSInterfaceChild component){
+    int id;
+    int slot;
+    private ItemDef itemDef;
+    public RSInterfaceChild child;
+    Random r = new Random();
 
-		id--;
-		this.id = id;
-		this.slot = slot;
-		if(id > -1){
-		this.itemDef = BSLoader.getClient().getForId(id);
-		}
-		this.child = component;
-	}
-	
-	private int getScreenX(){
-		return ((child.getScreenX()+child.getAccessor().getXOffset()) + slot+1 * (32 + child.getAccessor().getInvSpritePadX()));
-	}
-	
-	private int getScreenY(){
-		System.out.println(child.getAccessor().getInvSpritePadX());
-		System.out.println(child.getAccessor().getInvSpritePadY());
-		return ((child.getScreenY()+child.getAccessor().getYOffset()) + slot+1 * (32 + child.getAccessor().getInvSpritePadY()));
-	}
-	
-	public Point getScreenLocation(){
-		return new Point(getScreenX() + r.nextInt(8), getScreenY());
-	}
-	
-	public int getId(){
-		return id;
-	}
-	
-	
-	
-	
-	public String getName() {
-		if(itemDef != null && itemDef.getName() != null){
-		return itemDef.getName();
-		}
-		return "null";
-	}
-	public int getSlot(){
-		return slot;
-	}
-	
-	public void interact(String action) {
-		Mouse n = new Mouse();
-		if (Menu.isOpen()) {
-			n.moveMouse(new Point(10, 10));
-		}
+    public Methods methods;
 
-		try{
-		Point p = getPoint();
-		n.moveMouse(p);
-		Thread.sleep(100);
+    public Client getHook() {
+        return methods.getHook();
+    }
 
-		n.clickMouse(p, false);
+    public RSBankItem(int id, int slot, RSInterfaceChild component, Methods m) {
+        methods = m;
+        id--;
+        this.id = id;
+        this.slot = slot;
+        if (id > -1) {
+            this.itemDef = getHook().getForId(id);
+        }
+        this.child = component;
+    }
 
+    private int getScreenX() {
+        return ((child.getScreenX() + child.getAccessor().getXOffset()) + slot + 1 * (32 + child
+                .getAccessor().getInvSpritePadX()));
+    }
 
-			Thread.sleep(1000);
-		}catch(Exception e){
-			
-		}
+    private int getScreenY() {
+        System.out.println(child.getAccessor().getInvSpritePadX());
+        System.out.println(child.getAccessor().getInvSpritePadY());
+        return ((child.getScreenY() + child.getAccessor().getYOffset()) + slot + 1 * (32 + child
+                .getAccessor().getInvSpritePadY()));
+    }
 
-		Menu.interact(action, false);
-	}
-	
-	public Point getPoint() {
-		int theSlot = slot;
-		Random r = new Random();
-		int col = theSlot-- % 8;
-		int row = theSlot / 8;
-		int x = 73 + col * 49;
-		int y = 63 + (row * 39);
+    public Point getScreenLocation() {
+        return new Point(getScreenX() + r.nextInt(8), getScreenY());
+    }
 
-		return new Point(x+10, y);
-	}
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        if (itemDef != null && itemDef.getName() != null) {
+            return itemDef.getName();
+        }
+        return "null";
+    }
+
+    public int getSlot() {
+        return slot;
+    }
+
+    public void interact(String action) {
+        if (methods.menu.isOpen()) {
+            methods.mouse.moveMouse(new Point(10, 10));
+        }
+
+        try {
+            Point p = getPoint();
+            methods.mouse.moveMouse(p);
+            Thread.sleep(100);
+
+            methods.mouse.clickMouse(p, false);
+
+            Thread.sleep(1000);
+        } catch (Exception e) {
+
+        }
+
+        methods.menu.interact(action, false);
+    }
+
+    public Point getPoint() {
+        int theSlot = slot;
+        Random r = new Random();
+        int col = theSlot-- % 8;
+        int row = theSlot / 8;
+        int x = 73 + col * 49;
+        int y = 63 + (row * 39);
+
+        return new Point(x + 10, y);
+    }
 
 }

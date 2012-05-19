@@ -1,10 +1,9 @@
-
 package com.bsbot.hooks;
 
-import java.awt.Graphics;
+import java.awt.*;
 
 public interface RSApplet {
-	
-	public Graphics getGraphics();
+
+    public Graphics getGraphics();
 
 }

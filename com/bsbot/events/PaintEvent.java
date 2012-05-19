@@ -1,23 +1,34 @@
 package com.bsbot.events;
 
-import java.awt.Graphics;
+import com.bsbot.events.debugpaint.DebugPaint;
+import com.bsbot.launcher.Loader;
 
-import scripts.Script;
+import java.awt.*;
 
-import com.bsbot.launcher.BSLoader;
 
 public class PaintEvent {
-	
-	public void paintHack(Graphics g) {
-		try{
-			BSLoader.getPaintJob().paint(g);
-		if(BSLoader.getRunningScript() != null){
-			BSLoader.getRunningScript().paint(g);
-		}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		
-	}
+
+
+    public void paintHack(Graphics g, int hashCode) {
+        try {
+            for (Loader l : com.bsbot.launcher.Frame.loaders) {
+                if (l != null && l.getHook() != null && l.getHook().getGraphics() != null && l.getHook().getGraphics().hashCode() == hashCode) {
+                    if (l.getRunningScript() != null && l.getRunningScript().isRunning()) {
+                        l.getRunningScript().paint(g);
+                    }
+                    for (DebugPaint paint : l.getDebugPaints()) {
+                        if (paint.isEnabled()) {
+
+                            paint.paint(g);
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }

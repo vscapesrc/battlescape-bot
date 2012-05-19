@@ -1,17 +1,22 @@
 package scripts.randoms;
 
-import com.bsbot.api.Methods;
-import com.bsbot.launcher.BSLoader;
-
-public abstract class Random extends Methods implements Runnable {
+import scripts.Script;
+public abstract class Random  implements Runnable {
 	
 	private boolean running = false;
 	
 	private boolean asd;
 	
+	public Script script;
+	
 	public void setRunning(boolean what){
 		running = what;
 	}
+	
+	public void setScript(Script s){
+		this.script=s;
+	}
+	
 	
 	public abstract boolean startUp();
 	
@@ -27,9 +32,9 @@ public abstract class Random extends Methods implements Runnable {
 			try{
 			asd = startUp();
 			if(asd){
-				BSLoader.getRunningScript().setPaused(true);
+				script.setPaused(true);
 				sleep = loop();
-				BSLoader.getRunningScript().setPaused(false);
+				script.setPaused(false);
 			if(sleep < 0){
 				running = false;
 			}else{
